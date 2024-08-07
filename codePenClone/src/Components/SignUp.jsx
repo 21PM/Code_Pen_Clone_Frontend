@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
-// import {Link, useNavigate} from "react-router-dom"
-// import { SignwithGitHub, Signwithgoogle } from '../utils/helpers';
-// import { auth } from '../Config/firebase.config';
-// import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-// import { useSelector } from 'react-redux';
 
 const SignUp = () => {
 
   const[email,setEmail] = useState("")
+  const[name,setName] = useState("")
   const[password,setPassword] = useState("")
   const[isalreadyhaveaccount,setIsalreadyhaveaccount] = useState(false)
   const [isalert,SetIsalert] = useState(false)
@@ -15,6 +11,7 @@ const SignUp = () => {
   const [getEmailvalidationStatus,setEmailvalidationStatus] = useState(true)
 
 
+  
 
 
   return (
@@ -44,6 +41,12 @@ const SignUp = () => {
               <span className="text-gray-400">OR</span>
               <div className="h-px bg-gray-600 w-full"></div>
             </div>
+            <input
+              type="text"
+              onChange={(e)=>setName(e.target.value)}
+              placeholder="Please enter your name"
+              className="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:border-gray-500 mb-4"
+            />
             <input
               type="email"
               onChange={(e)=>setEmail(e.target.value)}
