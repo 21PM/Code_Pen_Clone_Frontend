@@ -1,12 +1,10 @@
 import './App.css'
-import Navbar from './Components/Navbar'
-import Sidebar from './Components/Sidebar'
+import Router from './Routes/Router'
 function App() {
 
   return (
    <> 
-      {/* <Sidebar/> */}
-      <Navbar/>
+      <Router/>
     </>
   )
 }

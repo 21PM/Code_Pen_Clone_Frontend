@@ -6,11 +6,15 @@ import { HiSearch } from "react-icons/hi";
 import { RiArrowRightDoubleLine } from "react-icons/ri";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { GrLogout } from "react-icons/gr";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   const [isLogin, SetisLogin] = useState(true);
   const [SideBarOpen, SetSideBarOpen] = useState(false);
   const [showProfile, SetShowProfile] = useState(false);
+
+  const navigate = useNavigate()
+  
 
   return (
     <>
@@ -47,7 +51,7 @@ function Navbar() {
       }
 
       {/* // Complete Navbar */}
-      <nav className="h-14 bg-black 2xs:w-12/12">
+      <nav className={`h-14 bg-black 2xs:w-12/12 ${!isLogin ? "pt-2" : ""}`}>
         <div>
           <div
             className={`flex items-center ${
@@ -57,8 +61,9 @@ function Navbar() {
             {/* // YOURWORK FOLLOWING TRENDING  */}
             <section className="text-white flex gap-1">
               <div
-                className="px-2 py-2 text-xs bg-gray-700 cursor-pointer rounded-sm"
                 title="Your Work"
+                className="px-2 py-2 text-xs bg-gray-700 cursor-pointer rounded-sm"
+                onClick={()=>navigate("/your-work") }
               >
                 <span className="hidden md:block">Your Work</span>
                 <span className="block md:hidden">
@@ -68,6 +73,7 @@ function Navbar() {
               <div
                 title="Following"
                 className="px-2 py-2 text-xs bg-gray-700 cursor-pointer rounded-sm"
+                onClick={()=>navigate("/following") }
               >
                 <span className="hidden md:block">Following</span>
                 <span className="block md:hidden">
@@ -77,6 +83,7 @@ function Navbar() {
               <div
                 title="Trending"
                 className="px-2 py-2 text-xs bg-gray-700 cursor-pointer rounded-sm"
+                onClick={()=>navigate("/trending") }
               >
                 <span className="hidden md:block">Trending</span>
                 <span className="block md:hidden">
@@ -122,41 +129,45 @@ function Navbar() {
                       ></img>
                     </div>
                     {/* // USerName  Div */}
-                    <div  className="cursor-pointer" onClick={()=>SetShowProfile(!showProfile)}>
+                    <div
+                      className="cursor-pointer"
+                      onClick={() => SetShowProfile(!showProfile)}
+                    >
                       <span>Paras</span>
                     </div>
                     {/* // Down Arrow div */}
-                    <div  className="cursor-pointer" onClick={()=>SetShowProfile(!showProfile)}>
+                    <div
+                      className="cursor-pointer"
+                      onClick={() => SetShowProfile(!showProfile)}
+                    >
                       <span>
-                        <MdKeyboardArrowDown/>
+                        <MdKeyboardArrowDown />
                       </span>
                     </div>
                   </div>
-                  {
-                    showProfile && <div className="absolute">
-                    <div
-                      className="fixed right-0 top-17 h-[35%] bg-black opacity-90  shadow-lg overflow-auto rounded-bl-md"
-                    >
-                      <div className="flex flex-col gap-1">
-                      <div className=" px-4 py-2 hover:bg-gray-800 cursor-pointer">
-                          <span className="text-sm">Your Work</span>
-                        </div>
-                        <div className=" px-4 py-2 hover:bg-gray-800 cursor-pointer">
-                          <span className="text-sm">Name : Paras</span>
-                        </div>
-                        <div className=" px-4 py-2 hover:bg-gray-800 cursor-pointer">
-                          <span className="text-sm">
-                            Email : Parasmore@gmail.com
-                          </span>
-                        </div>
-                        <div className="px-4 py-2  hover:bg-gray-800 cursor-pointer flex items-center gap-2">
-                        <GrLogout/>
-                          <span className="text-sm">Logout</span>
+                  {showProfile && (
+                    <div className="absolute">
+                      <div className="fixed right-0 top-17 h-[35%] bg-black opacity-90  shadow-lg overflow-auto rounded-bl-md">
+                        <div className="flex flex-col gap-1">
+                          <div className=" px-4 py-2 hover:bg-gray-800 cursor-pointer">
+                            <span className="text-sm">Your Work</span>
+                          </div>
+                          <div className=" px-4 py-2 hover:bg-gray-800 cursor-pointer">
+                            <span className="text-sm">Name : Paras</span>
+                          </div>
+                          <div className=" px-4 py-2 hover:bg-gray-800 cursor-pointer">
+                            <span className="text-sm">
+                              Email : Parasmore@gmail.com
+                            </span>
+                          </div>
+                          <div className="px-4 py-2  hover:bg-gray-800 cursor-pointer flex items-center gap-2">
+                            <GrLogout />
+                            <span className="text-sm">Logout</span>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  }
+                  )}
                 </>
               )}
             </section>
