@@ -1,18 +1,100 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { API_END_POINT } from '../utils/API';
+import axios from 'axios'
+import { toast } from 'react-toastify';
+import { setUser } from '../Slice.js/userSlice';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 
 const SignUp = () => {
 
+  const user = useSelector(store=>store.user.user)
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate();
   const[email,setEmail] = useState("")
   const[name,setName] = useState("")
   const[password,setPassword] = useState("")
+  const [isLoading,SetIsloading] = useState(false)
   const[isalreadyhaveaccount,setIsalreadyhaveaccount] = useState(false)
   const [isalert,SetIsalert] = useState(false)
   const [alertmsg,Setalertmsg] = useState("")
   const [getEmailvalidationStatus,setEmailvalidationStatus] = useState(true)
 
 
-  
 
+
+  async function HandleSignUp (e){
+        if(!name ||!email || !password){
+          toast.error("Please fill all the details")
+          return 
+        }
+        const userObj = {
+          name,
+          email,
+          password
+        }      
+                
+        try{
+          SetIsloading(true)
+          const res = await axios.post(`http://localhost:10000/signup`,userObj,)          
+          if(res.status === 200){
+                toast.success("Your account has been created")
+                setIsalreadyhaveaccount(!isalreadyhaveaccount)
+          }
+
+                
+        }catch(e){
+          console.log(e.response.data.message);
+            toast.error(e.response.data.message)
+            
+        }finally{
+          SetIsloading(false)
+          setName("")
+          setEmail("")
+          setPassword("")
+
+        }
+        
+  }
+
+
+  // LOGIN FUNCTION 
+  const HandleLogin = async()=>{
+
+    
+    if(!email || !password){
+        toast.error("Please provide login id and password")
+        return
+    }
+      const obj = {
+        email:email.toLowerCase(),
+        password  
+      }
+    try{
+      SetIsloading(true)
+        const res = await axios.post(`http://localhost:10000/login`,obj,{
+          withCredentials: true // This is crucial for sending cookies
+      })
+  
+      if(res.data.status){
+        dispatch(setUser(res.data.user))
+        localStorage.setItem("CPToken",res.data.token.toString())
+        localStorage.setItem("user",JSON.stringify(res.data.user))
+
+          toast.success("You are logged in sucessfully")
+          navigate("/your-work")
+      }
+        
+    }catch(e){
+        console.log(e);
+    }finally{
+      SetIsloading(false)
+    }
+
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
@@ -41,21 +123,30 @@ const SignUp = () => {
               <span className="text-gray-400">OR</span>
               <div className="h-px bg-gray-600 w-full"></div>
             </div>
-            <input
-              type="text"
-              onChange={(e)=>setName(e.target.value)}
-              placeholder="Please enter your name"
-              className="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:border-gray-500 mb-4"
-            />
+              {
+                !isalreadyhaveaccount &&  <input
+                type="text"
+                value={name}
+                onChange={(e)=>setName(e.target.value)}
+                placeholder="Please enter your name"
+                className="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:border-gray-500 mb-4"
+              />
+              }
+          
             <input
               type="email"
+              value={email}
+
               onChange={(e)=>setEmail(e.target.value)}
+              autoComplete="username" // Corrected attribute
               placeholder="Username or Email"
               className="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:border-gray-500 mb-4"
             />
             <input
               type="password"
+              value={password}
               placeholder="Password"
+              autoComplete="new-password" // Corrected attribute
               onChange={(e)=>setPassword(e.target.value)}
               className="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:border-gray-500 mb-4"
             />
@@ -64,10 +155,10 @@ const SignUp = () => {
             }
 
             {
-              !isalreadyhaveaccount ?<><button className="w-full bg-green-500 py-2 rounded-lg text-white font-bold hover:bg-green-600 transition-all mb-4">
-              Sign up
-            </button></>:<> <button className="w-full bg-green-500 py-2 rounded-lg text-white font-bold hover:bg-green-600 transition-all mb-4" >
-              Login up
+              !isalreadyhaveaccount ?<><button className="w-full bg-green-500 py-2 rounded-lg text-white font-bold hover:bg-green-600 transition-all mb-4" onClick={HandleSignUp}>
+                {isLoading ? "Loading..." :" Sign up"}
+            </button></>:<> <button className="w-full bg-green-500 py-2 rounded-lg text-white font-bold hover:bg-green-600 transition-all mb-4" onClick={HandleLogin}>
+           {isLoading ? "Loading..." :"Login up"}
             </button></>
             }
             

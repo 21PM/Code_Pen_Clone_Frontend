@@ -5,20 +5,25 @@ import SignUp from '../Components/SignUp'
 import YourWork from '../Components/YourWork'
 import Following from '../Components/Following'
 import Trending from '../Components/Trending'
-
-
+import PageNotFound from '../Components/PageNotFound'
+import { useSelector } from 'react-redux'
+import Pen from '../Components/Pen'
 function Router() {
-    const [isLogin,SetisLogin] = useState(false)
 
+    const user = useSelector(store=>store.user.user)
+    
   return (
     <>
       <BrowserRouter>
-      <Navbar />
+        {window.location.pathname !== '/pen' && <Navbar />} {/* Conditionally render Navbar */}
+
         <Routes>
-          <Route path='/'element={!isLogin && <SignUp/>}/>
-          <Route path='/your-work'element={isLogin && <YourWork/>}/>
-          <Route path='/following'element={isLogin && <Following/>}/>
+          <Route path='/'element={!user&& <SignUp/>}/>
+          <Route path='/your-work'element={<YourWork/>}/>
+          <Route path='/following'element={<Following/>}/>
           <Route path='/trending'element={<Trending/>}/>
+          <Route path='/pen'element={<Pen/>}/>
+          <Route path="*" element={<PageNotFound/>} />
         </Routes>
       </BrowserRouter>
     </>

@@ -7,13 +7,16 @@ import { RiArrowRightDoubleLine } from "react-icons/ri";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { GrLogout } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Navbar() {
+
+    const user = useSelector(store=>store.user.user)
+    const navigate = useNavigate()
   const [isLogin, SetisLogin] = useState(true);
   const [SideBarOpen, SetSideBarOpen] = useState(false);
   const [showProfile, SetShowProfile] = useState(false);
 
-  const navigate = useNavigate()
   
 
   return (
@@ -51,7 +54,7 @@ function Navbar() {
       }
 
       {/* // Complete Navbar */}
-      <nav className={`h-14 bg-black 2xs:w-12/12 ${!isLogin ? "pt-2" : ""}`}>
+      <nav className={`h-14 relative bg-black 2xs:w-12/12 ${!user ? "pt-2" : ""}`}>
         <div>
           <div
             className={`flex items-center ${
@@ -106,18 +109,18 @@ function Navbar() {
             <section className="text-white">
               {/* // Sign Up and Login button if not login */}
 
-              {!isLogin && (
+              {!user && (
                 <div className="flex gap-1">
-                  <button className="px-3 py-2 text-xs bg-green-400 rounded-sm text-black hover:bg-green-600 hover:text-white">
+                  <button className="px-3 py-2 text-xs bg-green-400 rounded-sm text-black hover:bg-green-600 hover:text-white" onClick={()=>navigate("/")}>
                     Sign Up
                   </button>
-                  <button className="px-3 py-2 text-xs bg-gray-700 hover:bg-gray-600 rounded-sm">
+                  <button className="px-3 py-2 text-xs bg-gray-700 hover:bg-gray-600 rounded-sm" onClick={()=>navigate("/")}>
                     Log In
                   </button>
                 </div>
               )}
 
-              {isLogin && (
+              {user && (
                 <>
                   {/* // Profile button when user is logged in*/}
                   <div className="flex items-center justify-center gap-1">
@@ -133,7 +136,7 @@ function Navbar() {
                       className="cursor-pointer"
                       onClick={() => SetShowProfile(!showProfile)}
                     >
-                      <span>Paras</span>
+                      <span>{user.name}</span>
                     </div>
                     {/* // Down Arrow div */}
                     <div
@@ -147,17 +150,17 @@ function Navbar() {
                   </div>
                   {showProfile && (
                     <div className="absolute">
-                      <div className="fixed right-0 top-17 h-[35%] bg-black opacity-90  shadow-lg overflow-auto rounded-bl-md">
+                      <div className="fixed right-0 top-17 h-[35%] min-w-52 bg-black opacity-90 shadow-lg overflow-auto rounded-bl-md">
                         <div className="flex flex-col gap-1">
                           <div className=" px-4 py-2 hover:bg-gray-800 cursor-pointer">
                             <span className="text-sm">Your Work</span>
                           </div>
                           <div className=" px-4 py-2 hover:bg-gray-800 cursor-pointer">
-                            <span className="text-sm">Name : Paras</span>
+                            <span className="text-sm">Name : {user.name}</span>
                           </div>
                           <div className=" px-4 py-2 hover:bg-gray-800 cursor-pointer">
                             <span className="text-sm">
-                              Email : Parasmore@gmail.com
+                              Email : {user.email}
                             </span>
                           </div>
                           <div className="px-4 py-2  hover:bg-gray-800 cursor-pointer flex items-center gap-2">
