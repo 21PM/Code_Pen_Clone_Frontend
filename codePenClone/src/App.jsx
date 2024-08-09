@@ -4,13 +4,16 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import store from './Store/store';
 import { Provider } from 'react-redux';
-
+import { BrowserRouter } from 'react-router-dom';
 function App() {
 
   return (
    <> 
     <Provider store={store}>
+    <BrowserRouter>
       <Router/>
+    </BrowserRouter>
+
       <ToastContainer
       position="top-center"
       autoClose={2000}

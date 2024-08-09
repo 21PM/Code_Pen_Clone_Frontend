@@ -48,8 +48,13 @@ function Navbar() {
                 onClick={() => SetSideBarOpen(!SideBarOpen)}
               />
             </div>
+
           </div>
-          <div></div>
+          <div className="flex justify-center items-center mt-10">
+            {
+              SideBarOpen && <button className="px-10 border-2 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700" onClick={()=>navigate("/pen")} >Pen</button>
+            }
+          </div>
         </div>
       }
 

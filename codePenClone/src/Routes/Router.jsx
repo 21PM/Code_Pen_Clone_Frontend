@@ -7,17 +7,16 @@ import Following from '../Components/Following'
 import Trending from '../Components/Trending'
 import PageNotFound from '../Components/PageNotFound'
 import { useSelector } from 'react-redux'
-import Pen from '../Components/Pen'
 import NewStaticPen from '../Components/NewStaticPen'
-
+import { useLocation } from 'react-router-dom'
 function Router() {
 
     const user = useSelector(store=>store.user.user)
-    
+    const location = useLocation(); // Use useLocation to get the current path
+
   return (
     <>
-      <BrowserRouter>
-        {window.location.pathname !== '/pen' && <Navbar />} {/* Conditionally render Navbar */}
+        {location.pathname !== '/pen' && <Navbar />} {/* Conditionally render Navbar */}
 
         <Routes>
           <Route path='/'element={!user&& <SignUp/>}/>
@@ -27,7 +26,6 @@ function Router() {
           <Route path='/pen'element={<NewStaticPen/>}/>
           <Route path="*" element={<PageNotFound/>} />
         </Routes>
-      </BrowserRouter>
     </>
   )
 }
