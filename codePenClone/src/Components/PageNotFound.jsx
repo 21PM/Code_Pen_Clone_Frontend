@@ -4,11 +4,12 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../Slice.js/userSlice'; 
 import { jwtDecode } from "jwt-decode";
-
+import { useNavigate } from 'react-router-dom';
 const PageNotFound = () => {
 
     const user = useSelector(store=>store.user)
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     console.log(user);
 
 

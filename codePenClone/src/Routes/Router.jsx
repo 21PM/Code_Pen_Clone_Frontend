@@ -8,6 +8,8 @@ import Trending from '../Components/Trending'
 import PageNotFound from '../Components/PageNotFound'
 import { useSelector } from 'react-redux'
 import Pen from '../Components/Pen'
+import NewStaticPen from '../Components/NewStaticPen'
+
 function Router() {
 
     const user = useSelector(store=>store.user.user)
@@ -22,7 +24,7 @@ function Router() {
           <Route path='/your-work'element={<YourWork/>}/>
           <Route path='/following'element={<Following/>}/>
           <Route path='/trending'element={<Trending/>}/>
-          <Route path='/pen'element={<Pen/>}/>
+          <Route path='/pen'element={<NewStaticPen/>}/>
           <Route path="*" element={<PageNotFound/>} />
         </Routes>
       </BrowserRouter>
