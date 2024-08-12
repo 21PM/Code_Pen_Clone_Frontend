@@ -6,7 +6,7 @@ import { FaHtml5 } from "react-icons/fa";
 import { IoLogoCss3 } from "react-icons/io";
 import { DiJavascript } from "react-icons/di";
 import { useSelector } from 'react-redux'
-import { setHtml,setCss,setJs,setOutout } from '../Slice.js/workSlice';
+import { setHtml,setCss,setJs,setOutout, setOnlyViewCode,setTitle } from '../Slice.js/workSlice';
 import { useDispatch } from 'react-redux';
 import { FaRegSave } from "react-icons/fa";
 import { javascript } from '@codemirror/lang-javascript';
@@ -17,31 +17,29 @@ import axios from "axios"
 import { json, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { setEditWork } from '../Slice.js/workSlice';
+
 function NewStaticPen() {
 
   const location = useLocation()
 
   const state = location.state; // Fallback to empty object or provide default values
 
-  
   const work = useSelector(store=>store.work)
   const isEdit = useSelector(store=>store.work.edit)
-
-  const {html,css,js,output} = useSelector(store=>store.work)
+  const onlyViewCode = useSelector(store=>store.work.onlyViewCode)
+  const doEditWorkId = useSelector(store=>store.work.doEditWorkId)
+  const {html,css,js,output,title} = useSelector(store=>store.work)
   const [codeOutput,SetCodeOutput] = useState()
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [changeTitle,setChangeTitle] = useState(false)
-  const [title,setTitle] = useState("untitled")
+  // const [title,setTitle] = useState("Untitled")
  
   useEffect(() => {
     updateOutput();
-    
     const parsepOut =(state?JSON.parse(state.output):"")
-    
     const CurrentOutput = parsepOut ? parsepOut : work.output
     SetCodeOutput(CurrentOutput)    
-
   }, [html,css,js,output]);
 
 
@@ -61,7 +59,8 @@ function NewStaticPen() {
   // Cleanup event listener on component unmount
   return () => {
     window.removeEventListener('beforeunload', handleBeforeUnload);
-  };
+    // Update EditSave button to false
+    };
 }, []);
 
 
@@ -78,7 +77,7 @@ function NewStaticPen() {
         body {
             margin: 0;
             padding: 0;
-        },
+        },{}
         ${css}
         /* Add any additional styles here */
     </style>
@@ -167,9 +166,72 @@ function NewStaticPen() {
 
   }
   
-  function editAndSaveCode(){
-    dispatch(setEditWork(false)
-  )
+ async function editAndSaveCode(id){
+  dispatch(setOnlyViewCode(false))
+  dispatch(setEditWork(false))
+
+      
+    const token =  getToken("CPToken")
+    if(!token){
+      toast.error("Please login to save code")
+      return;
+    }
+
+    const decoded = jwtDecode(token);
+    const expiryTime = decoded.exp * 1000; // Convert to milliseconds
+    const currentTime = Date.now()
+
+  if (expiryTime < currentTime) {
+    // Token is expired
+    localStorage.removeItem('CPToken');
+    localStorage.removeItem('user');
+    dispatch(setUser(null))
+
+    toast.error("Please login again to save code session expired")
+
+    return; 
+  }else{
+    const user = localStorage.getItem("user")
+    const jsonUSer = JSON.parse(user)
+    dispatch(setUser(jsonUSer))
+  }
+
+    const editedCompleteCode = {
+      html:JSON.stringify(html),
+      css:JSON.stringify(css),
+      javascript:JSON.stringify(js),
+      title:title,
+      output:JSON.stringify(output)
+    }
+
+      try{
+        const res = await axios.post(`http://localhost:10000/edit-work/${doEditWorkId}`,editedCompleteCode,{
+          withCredentials:true,
+          headers:{
+            'Authorization' : `Bearer ${token}`
+          }
+        })
+
+        console.log("resp",res);
+        if(res.data.status){
+          toast.success("Your work has been updated")
+          navigate("/your-work")
+          dispatch(setHtml(""))
+          dispatch(setCss(""))
+          dispatch(setJs(""))
+          dispatch(setOutout(""))
+          dispatch(setTitle("Untitled"))
+        }
+        
+
+
+      }catch(e){
+          console.log("er",e);
+          
+      }
+
+    
+
   }
   
   return (
@@ -188,7 +250,7 @@ function NewStaticPen() {
                 <div className="flex flex-col items-start justify-center">
                   <div className="flex gap-1 items-center">
                     {
-                      !changeTitle ? <span className="text-white">{title}</span> : <input type='text' onChange={(e)=>setTitle(e.target.value)} value={title} placeholder='enter project title'></input>
+                      !changeTitle ? <span className="text-white">{title.charAt(0).toUpperCase() + "" + title.substr(1,title.length)}</span> : <input type='text' onChange={(e)=>dispatch(setTitle(e.target.value))} value={title} placeholder='enter project title'></input>
                     }
                     
                     <span className="text-white cursor-pointer">
@@ -204,35 +266,48 @@ function NewStaticPen() {
 
               <section className="w-full h-full flex gap-8 items-center justify-end px-6 py-1">
           
-                {
-                  isEdit ?  <button onClick={editAndSaveCode} className="py-1 px-3 bg-gray-600 flex items-center justify-center gap-1 hover:bg-transparent hover:border-2 text-white rounded-sm">
+              {
+                !onlyViewCode && (
+                  isEdit ? ( <button onClick={editAndSaveCode} className="py-1 px-3 bg-gray-600 flex items-center justify-center gap-1 hover:bg-transparent hover:border-2 text-white rounded-sm">
+                  <FaCloud />
+                   Edit & Save  
+                 </button> ) :  (<button onClick={SaveCodeInDB} className="py-1 px-3 bg-gray-600 flex items-center justify-center gap-1 hover:bg-transparent hover:border-2 text-white rounded-sm">
+                 <FaCloud />
+                  Save  
+                </button>)
+                )
+              }
+                {/* {
+                   isEdit ?  <button onClick={editAndSaveCode} className="py-1 px-3 bg-gray-600 flex items-center justify-center gap-1 hover:bg-transparent hover:border-2 text-white rounded-sm">
                   <FaCloud />
                    Edit & Save  
                  </button> :  <button onClick={SaveCodeInDB} className="py-1 px-3 bg-gray-600 flex items-center justify-center gap-1 hover:bg-transparent hover:border-2 text-white rounded-sm">
                  <FaCloud />
                   Save  
                 </button>
-                }
+                } */}
+
+
+
                 <button className="py-1 px-3 bg-gray-600 text-white rounded-sm hover:bg-transparent hover:border-2 ">
                   Profile
                 </button>
               </section>
             </nav>
-  
 
       <section className="flex">
 
         {/* // HTML CSS AND JS */}
         <div className="max-w-[50%] min-w-[45%] flex flex-col justify-between items-center max-h-screen">
-          <div className="w-full overflow-scroll no-scrollbar bg-gray-900 text-white"><CodeWriter setter={setHtml} code={work.html || (state ? JSON.parse(state.html):"")}  lang={'HTML'} logo={<FaHtml5 className='text-white '/>} /></div>
-          <div className="w-full overflow-scroll no-scrollbar bg-gray-900 text-white"><CodeWriter setter={setCss} code={work.css || (state ? JSON.parse(state.css):"")} lang={'CSS'} logo={<IoLogoCss3 className='text-white'/>}/></div>
-          <div className="w-full overflow-scroll no-scrollbar bg-gray-900 text-white"><CodeWriter setter={setJs} code={work.js || (state ? JSON.parse(state.javascript):"")} lang={'JS'} logo={<DiJavascript className='text-white'/>}/></div>
+          <div className="w-full overflow-scroll no-scrollbar bg-gray-900 text-white"><CodeWriter setter={setHtml} code={work.html}  lang={'HTML'} logo={<FaHtml5 className='text-white '/>} /></div>
+          <div className="w-full overflow-scroll no-scrollbar bg-gray-900 text-white"><CodeWriter setter={setCss} code={work.css} lang={'CSS'} logo={<IoLogoCss3 className='text-white'/>}/></div>
+          <div className="w-full overflow-scroll no-scrollbar bg-gray-900 text-white"><CodeWriter setter={setJs} code={work.js} lang={'JS'} logo={<DiJavascript className='text-white'/>}/></div>
         </div>
 
                             
         <iframe
               title="Results"
-              srcDoc={codeOutput}
+              srcDoc={work.output}
               className='min-w-[55%] max-w-[55%] min-h-screen border-2 border-red-800'
             />
 

@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../Slice.js/userSlice";
 import { jwtDecode } from "jwt-decode";
 import {toast} from "react-toastify"
-import { setDeleteWork } from "../Slice.js/workSlice";
+import { setDeleteWork, setOnlyViewCode,setDoEditWorkId, setHtml, setCss, setJs,setOutout,setTitle } from "../Slice.js/workSlice";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { MdOutlineModeEdit } from "react-icons/md";
 import { useSelector } from "react-redux";
@@ -52,8 +52,7 @@ function ResultCard({output,title,allcode}) {
       const jsonUSer = JSON.parse(user)
       dispatch(setUser(jsonUSer))
     }
-    
-  
+
     },[])
   
      
@@ -88,8 +87,16 @@ function ResultCard({output,title,allcode}) {
       
    }
 
-  function handleEditWork() {
+  function handleViewAndEditWork() {
+    console.log(allcode);
+    
       dispatch(setEditWork(true)) 
+      dispatch(setDoEditWorkId(allcode._id))
+      dispatch(setHtml(JSON.parse(allcode.html)))
+      dispatch(setCss(JSON.parse(allcode.css)))
+      dispatch(setJs(JSON.parse(allcode.javascript)))
+      dispatch(setOutout(JSON.parse(allcode.output)))
+      dispatch(setTitle(allcode.title))
    }
   
   return (
@@ -120,11 +127,11 @@ function ResultCard({output,title,allcode}) {
           
 
           <div className="flex gap-2">
-                        <Link to="/pen" state={allcode}>
+                        <Link to="/pen" state={allcode} onClick={handleViewAndEditWork}>
                         <button className="bg-white hover:bg-black hover:text-white hover:border-2 rounded-sm font-bold text-xs p-1">View code</button>
                         </Link>
 
-                        <Link to="/pen" state={allcode} onClick={handleEditWork}>
+                        <Link to="/pen" state={allcode} onClick={handleViewAndEditWork}>
                          <button>
                           <MdOutlineModeEdit className="text-white hover:text-gray-700" title="edit"/>
                         </button>

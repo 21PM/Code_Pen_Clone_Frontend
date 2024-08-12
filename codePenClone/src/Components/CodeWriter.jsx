@@ -30,7 +30,6 @@ function CodeWriter({setter,code,lang,logo}) {
   </div>
   
   <div className="overflow-auto flex-grow">
-    
         <CodeMirror
                   value={code}
                   height="600px"

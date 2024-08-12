@@ -11,6 +11,7 @@ import { GrLogout } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLogin } from "../Slice.js/LoginSlice";
+import { setEditWork } from "../Slice.js/workSlice";
 function Navbar() {
 
     const user = useSelector(store=>store.user.user)
@@ -29,6 +30,12 @@ function Navbar() {
   function goToSignupPage(){
     dispatch(setLogin(false))
     navigate("/")
+}
+
+
+function goToPenPage(){
+  dispatch(setEditWork(false))
+  navigate("/pen")
 }
 
   useEffect(()=>{
@@ -70,12 +77,13 @@ function Navbar() {
               onClick={() => SetSideBarOpen(!SideBarOpen)}
             />
               }
+              
             </div>
 
           </div>
           <div className="flex justify-center items-center mt-10">
             {
-              SideBarOpen && <button className="xl:px-10 lg:px-8 md:px-4 sm:px-6 2xs:px-2  border-2 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700" onClick={()=>navigate("/pen")} >Pen</button>
+              SideBarOpen && <button className="xl:px-10 lg:px-8 md:px-4 sm:px-6 2xs:px-2  border-2 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700" onClick={goToPenPage} >Pen</button>
             }
           </div>
         </div>

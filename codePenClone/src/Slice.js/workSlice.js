@@ -7,8 +7,11 @@ const workSlice = createSlice({
         css:"",
         js:"",
         output:"",
+        title:"Untitled",
         delete:false,
-        edit:false
+        edit:false,
+        onlyViewCode:false,
+        doEditWorkId:"",
     },
     reducers:{
         setHtml:(state,action)=>{
@@ -23,15 +26,23 @@ const workSlice = createSlice({
         setOutout:(state,action)=>{
             state.output =  action.payload;
         },
+        setTitle:(state,action)=>{
+            state.title =  action.payload;
+        },
         setDeleteWork:(state,action)=>{
             state.delete =  action.payload;
         },
         setEditWork:(state,action)=>{
             state.edit =  action.payload;
+        },
+        setOnlyViewCode:(state,action)=>{
+            state.onlyViewCode =  action.payload;
+        },
+        setDoEditWorkId:(state,action)=>{
+            state.doEditWorkId =  action.payload;
         }
     }
 })
 
-
-export const {setHtml,setCss,setJs,setOutout,setDeleteWork,setEditWork} = workSlice.actions;
+export const {setHtml,setCss,setJs,setOutout,setTitle,setDeleteWork,setEditWork,setOnlyViewCode,setDoEditWorkId} = workSlice.actions;
 export const workReducer = workSlice.reducer
