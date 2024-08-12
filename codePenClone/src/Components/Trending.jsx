@@ -29,6 +29,10 @@ function Trending() {
    if (expiryTime < currentTime) {
      // Token is expired
      localStorage.removeItem('CPToken');
+     localStorage.removeItem('user');
+
+     dispatch(setUser(null))
+
      return; 
    }else{
      const user = localStorage.getItem("user")

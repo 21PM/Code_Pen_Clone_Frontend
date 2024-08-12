@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../Slice.js/userSlice'; 
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from 'react-router-dom';
-  
+import ResultCard from './ResultCard';  
 function Following() {
   
   const user = useSelector(store=>store.user)
@@ -29,6 +29,9 @@ function Following() {
    if (expiryTime < currentTime) {
      // Token is expired
      localStorage.removeItem('CPToken');
+     localStorage.removeItem('user');
+     dispatch(setUser(null))
+
      return; 
    }else{
      const user = localStorage.getItem("user")
@@ -38,9 +41,31 @@ function Following() {
  
    },[])
 
+   const ot = `
+    
+    <html>
+        <head>
+          <style>.pa{
+  color:red
+}</style>
+        </head>
+        <body>
+            <p class="pa">paras mire asda,dsla,ds</p>
+        <script>let pa = document.querySelector(".pa")
+
+pa.addEventListener("click",()=>{
+  pa.style.color = "green"
+})</script>
+        </body> 
+    </html>
+      `;
+
+
 
   return (
-    <div className='w-full min-h-full bg-yellow-500 text-center'>Following</div>
+    <div className='w-full min-h-full bg-yellow-500 text-center'>
+      <ResultCard/>
+    </div>
   )
 }
 

@@ -6,11 +6,13 @@ import { setUser } from '../Slice.js/userSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
+import { setLogin } from '../Slice.js/LoginSlice';
 
 const SignUp = () => {
 
   const user = useSelector(store=>store.user.user)
+  const login = useSelector(store=>store.login.login)
+  
 
   const dispatch = useDispatch()
   const navigate = useNavigate();
@@ -124,7 +126,7 @@ const SignUp = () => {
               <div className="h-px bg-gray-600 w-full"></div>
             </div>
               {
-                !isalreadyhaveaccount &&  <input
+                !login &&  <input
                 type="text"
                 value={name}
                 onChange={(e)=>setName(e.target.value)}
@@ -155,7 +157,7 @@ const SignUp = () => {
             }
 
             {
-              !isalreadyhaveaccount ?<><button className="w-full bg-green-500 py-2 rounded-lg text-white font-bold hover:bg-green-600 transition-all mb-4" onClick={HandleSignUp}>
+              !login ?<><button className="w-full bg-green-500 py-2 rounded-lg text-white font-bold hover:bg-green-600 transition-all mb-4" onClick={HandleSignUp}>
                 {isLoading ? "Loading..." :" Sign up"}
             </button></>:<> <button className="w-full bg-green-500 py-2 rounded-lg text-white font-bold hover:bg-green-600 transition-all mb-4" onClick={HandleLogin}>
            {isLoading ? "Loading..." :"Login up"}
@@ -165,7 +167,7 @@ const SignUp = () => {
             <a href="#" className="text-gray-400 text-sm underline block text-center mb-4">Forgot Password?</a>
            
             {
-              isalreadyhaveaccount ?  <> <a href="#" className="text-gray-400 text-sm underline block text-center" onClick={()=>setIsalreadyhaveaccount(false)}>Need an account? Sign up now!</a></> : <> <a href="#" className="text-gray-400 text-sm underline block text-center" onClick={()=>setIsalreadyhaveaccount(true)}>Already have an accoint ? Login here!</a></> 
+              login  ?  <> <a href="#" className="text-gray-400 text-sm underline block text-center" onClick={()=>dispatch(setLogin(false))}>Need an account? Sign up now!</a></> : <> <a href="#" className="text-gray-400 text-sm underline block text-center" onClick={()=>dispatch(setLogin(true))}>Already have an accoint ? Login here!</a></> 
             }
            
           </div>

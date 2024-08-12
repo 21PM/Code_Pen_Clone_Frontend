@@ -1,22 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GrWorkshop } from "react-icons/gr";
 import { SlUserFollowing } from "react-icons/sl";
 import { FiTrendingUp } from "react-icons/fi";
 import { HiSearch } from "react-icons/hi";
 import { RiArrowRightDoubleLine } from "react-icons/ri";
+import { RiArrowLeftDoubleLine } from "react-icons/ri";
+
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { GrLogout } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import { setLogin } from "../Slice.js/LoginSlice";
 function Navbar() {
 
     const user = useSelector(store=>store.user.user)
+    
     const navigate = useNavigate()
+    const dispatch = useDispatch()
   const [isLogin, SetisLogin] = useState(true);
   const [SideBarOpen, SetSideBarOpen] = useState(false);
   const [showProfile, SetShowProfile] = useState(false);
 
+  function goToLoginPage(){
+      dispatch(setLogin(true))
+      navigate("/")
+  }
+
+  function goToSignupPage(){
+    dispatch(setLogin(false))
+    navigate("/")
+}
+
+  useEffect(()=>{
+
+  },[user])
   
 
   return (
@@ -43,23 +60,29 @@ function Navbar() {
               <path d="M15 8a7 7 0 1 0 0 10m7-8.7L33 2l11 7.3v7.4L33 24l-11-7.3zm0 0 11 7.4 11-7.4m0 7.4L33 9.3l-11 7.4M33 2v7.3m0 7.4V24M52 6h5a7 7 0 0 1 0 14h-5zm28 0h-9v14h9m-9-7h6m11 1h6a4 4 0 0 0 0-8h-6v14m26-14h-9v14h9m-9-7h6m11 7V6l11 14V6"></path>
             </svg>
             <div className="text-white mt-14">
-              <RiArrowRightDoubleLine
-                className="text-black text-2xl mt-[10] cursor-pointer absolute"
+             
+              {
+                SideBarOpen ?  <RiArrowLeftDoubleLine
+                className="text-white rounded-md text-2xl mt-[10] cursor-pointer absolute"
                 onClick={() => SetSideBarOpen(!SideBarOpen)}
-              />
+              /> :  <RiArrowRightDoubleLine
+              className="text-white rounded-md text-2xl mt-[10] cursor-pointer absolute"
+              onClick={() => SetSideBarOpen(!SideBarOpen)}
+            />
+              }
             </div>
 
           </div>
           <div className="flex justify-center items-center mt-10">
             {
-              SideBarOpen && <button className="px-10 border-2 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700" onClick={()=>navigate("/pen")} >Pen</button>
+              SideBarOpen && <button className="xl:px-10 lg:px-8 md:px-4 sm:px-6 2xs:px-2  border-2 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700" onClick={()=>navigate("/pen")} >Pen</button>
             }
           </div>
         </div>
       }
 
       {/* // Complete Navbar */}
-      <nav className={`h-14 relative bg-black 2xs:w-12/12 ${!user ? "pt-2" : ""}`}>
+      <nav className={`h-14 relative  bg-black 2xs:w-12/12 ${!user ? "pt-2" : ""}`}>
         <div>
           <div
             className={`flex items-center ${
@@ -116,10 +139,10 @@ function Navbar() {
 
               {!user && (
                 <div className="flex gap-1">
-                  <button className="px-3 py-2 text-xs bg-green-400 rounded-sm text-black hover:bg-green-600 hover:text-white" onClick={()=>navigate("/")}>
+                  <button className="px-3 py-2 text-xs bg-green-400 rounded-sm text-black hover:bg-green-600 hover:text-white" onClick={goToSignupPage}>
                     Sign Up
                   </button>
-                  <button className="px-3 py-2 text-xs bg-gray-700 hover:bg-gray-600 rounded-sm" onClick={()=>navigate("/")}>
+                  <button className="px-3 py-2 text-xs bg-gray-700 hover:bg-gray-600 rounded-sm" onClick={goToLoginPage}>
                     Log In
                   </button>
                 </div>
@@ -155,7 +178,7 @@ function Navbar() {
                   </div>
                   {showProfile && (
                     <div className="absolute">
-                      <div className="fixed right-0 top-17 h-[35%] min-w-52 bg-black opacity-90 shadow-lg overflow-auto rounded-bl-md">
+                      <div className="fixed right-0 top-17 h-[35%] min-w-52 bg-black opacity-90 shadow-lg  rounded-bl-md">
                         <div className="flex flex-col gap-1">
                           <div className=" px-4 py-2 hover:bg-gray-800 cursor-pointer">
                             <span className="text-sm">Your Work</span>
