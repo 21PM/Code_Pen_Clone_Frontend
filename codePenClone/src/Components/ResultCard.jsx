@@ -75,7 +75,6 @@ function ResultCard({output,title,allcode}) {
         if(response.data.status){
             toast.success("Your Post has been deleted")
             dispatch(setDeleteWork(true))
-            navigate("/your-work")
         };
       }catch(e){
         console.log(e)

@@ -15,7 +15,7 @@ import { setEditWork } from "../Slice.js/workSlice";
 function Navbar() {
 
     const user = useSelector(store=>store.user.user)
-    
+
     const navigate = useNavigate()
     const dispatch = useDispatch()
   const [isLogin, SetisLogin] = useState(true);
@@ -32,12 +32,15 @@ function Navbar() {
     navigate("/")
 }
 
-
 function goToPenPage(){
   dispatch(setEditWork(false))
   navigate("/pen")
 }
 
+
+function goToYourWork(){
+    navigate("/your-work")
+}
   useEffect(()=>{
 
   },[user])
@@ -104,8 +107,8 @@ function goToPenPage(){
                 className="px-2 py-2 text-xs bg-gray-700 cursor-pointer rounded-sm"
                 onClick={()=>navigate("/your-work") }
               >
-                <span className="hidden md:block">Your Work</span>
-                <span className="block md:hidden">
+                <span className="hidden md:block" onClick={goToYourWork}>Your Work</span>
+                <span className="block md:hidden" onClick={goToYourWork}>
                   <GrWorkshop />
                 </span>
               </div>
