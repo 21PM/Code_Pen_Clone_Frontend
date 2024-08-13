@@ -12,6 +12,9 @@ const workSlice = createSlice({
         edit:false,
         onlyViewCode:false,
         doEditWorkId:"",
+        skipCount:0,
+        allTrendingWork:[],
+
     },
     reducers:{
         setHtml:(state,action)=>{
@@ -40,9 +43,16 @@ const workSlice = createSlice({
         },
         setDoEditWorkId:(state,action)=>{
             state.doEditWorkId =  action.payload;
+        },
+        setSkipCount: (state,action)=>{
+            state.skipCount += action.payload;
+        },
+        setAllTrendingWork: (state,action)=>{
+             state.allTrendingWork.push(...action.payload);
         }
+  
     }
 })
 
-export const {setHtml,setCss,setJs,setOutout,setTitle,setDeleteWork,setEditWork,setOnlyViewCode,setDoEditWorkId} = workSlice.actions;
+export const {setHtml,setCss,setJs,setOutout,setTitle,setDeleteWork,setEditWork,setOnlyViewCode,setDoEditWorkId,setSkipCount,setAllTrendingWork} = workSlice.actions;
 export const workReducer = workSlice.reducer
