@@ -1,18 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setHtml,setCss,setJs,setOutout } from '../Slice.js/workSlice'
 
 function TrendResult({output,title,id,allCode}) {
   const dispatch = useDispatch()
+
+  const trendingSearchValue = useSelector(store=>store.work.trendingSearchValue)
+
 
   const ShowTrendingViewCode = () =>{      
 
       dispatch(setHtml(JSON.parse(allCode.html)))
       dispatch(setCss(JSON.parse(allCode.css)))
       dispatch(setJs(JSON.parse(allCode.javascript)))
-      dispatch(setOutout(JSON.parse(allCode.output)))
-     
+      dispatch(setOutout(JSON.parse(allCode.output))) 
         
   }
 

@@ -8,10 +8,13 @@ import { RiArrowLeftDoubleLine } from "react-icons/ri";
 
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { GrLogout } from "react-icons/gr";
-import { useNavigate } from "react-router-dom";
+import { useFetcher, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLogin } from "../Slice.js/LoginSlice";
 import { setEditWork } from "../Slice.js/workSlice";
+import { setTrendingSearchState,setTrendingSearchValue } from "../Slice.js/workSlice";
+
+
 function Navbar() {
 
     const user = useSelector(store=>store.user.user)
@@ -19,6 +22,7 @@ function Navbar() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
   const [isLogin, SetisLogin] = useState(true);
+  const[searchedValue ,setSearchedValue] = useState("")
   const [SideBarOpen, SetSideBarOpen] = useState(false);
   const [showProfile, SetShowProfile] = useState(false);
 
@@ -37,9 +41,13 @@ function goToPenPage(){
   navigate("/pen")
 }
 
-
 function goToYourWork(){
     navigate("/your-work")
+}
+
+function handleTrendingSearch (e){
+  dispatch(setTrendingSearchState(true))
+  dispatch(setTrendingSearchValue(e.target.value))
 }
   useEffect(()=>{
 
@@ -141,6 +149,7 @@ function goToYourWork(){
                 type="text"
                 placeholder="Seach CodePen..."
                 className="bg-gray-700 w-full  focus:outline-none border-none"
+                onChange={(e)=>handleTrendingSearch(e)}
               ></input>
             </section>
 

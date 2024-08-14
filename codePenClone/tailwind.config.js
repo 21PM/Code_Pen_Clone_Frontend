@@ -5,6 +5,7 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    
     extend: {screens: {
       '2xs': '200px',   // Smallest screens (phones)
       'xs': '430px',   // Smaller screens (phones)

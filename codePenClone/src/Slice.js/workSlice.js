@@ -14,6 +14,10 @@ const workSlice = createSlice({
         doEditWorkId:"",
         skipCount:0,
         allTrendingWork:[],
+        hasMore:true,
+        trendingSearchState:false,
+        trendingSearchValue:"",
+        trendingSearchedData:[],
 
     },
     reducers:{
@@ -49,10 +53,22 @@ const workSlice = createSlice({
         },
         setAllTrendingWork: (state,action)=>{
              state.allTrendingWork.push(...action.payload);
-        }
+        },
+        setHasMore: (state,action)=>{
+            state.hasMore =  action.payload;
+        },
+        setTrendingSearchState: (state,action)=>{
+            state.trendingSearchState =  action.payload;
+        },
+        setTrendingSearchValue: (state,action)=>{
+            state.trendingSearchValue =  action.payload;
+       },
+       setTrendingSearchedData: (state,action)=>{
+        state.trendingSearchedData =  action.payload;
+         }
   
     }
 })
 
-export const {setHtml,setCss,setJs,setOutout,setTitle,setDeleteWork,setEditWork,setOnlyViewCode,setDoEditWorkId,setSkipCount,setAllTrendingWork} = workSlice.actions;
+export const {setHtml,setCss,setJs,setOutout,setTitle,setDeleteWork,setEditWork,setOnlyViewCode,setDoEditWorkId,setSkipCount,setAllTrendingWork,setHasMore,setTrendingSearchState,setTrendingSearchValue,setTrendingSearchedData} = workSlice.actions;
 export const workReducer = workSlice.reducer
