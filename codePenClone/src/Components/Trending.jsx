@@ -18,6 +18,7 @@ function Trending() {
 
     
   const skipCount = useSelector(store=>store.work.skipCount)
+  const user = useSelector(store=>store.user.user)
   const hasMore = useSelector(store=>store.work.hasMore)
   const trendingSearchState = useSelector(store=>store.work.trendingSearchState)
   const trendingSearchValue = useSelector(store=>store.work.trendingSearchValue)
@@ -91,6 +92,12 @@ function Trending() {
           }
   }
 
+  useEffect(()=>{
+    // console.log("a");
+    // console.log(user);
+    
+  },[user])
+
    useEffect(()=>{     
      const user = localStorage.getItem("user")
      const jsonUSer = JSON.parse(user)
@@ -131,9 +138,17 @@ function Trending() {
       {
        !trendingSearchState &&  allTrendingWork.map((ele)=>{
               const JsonOutput = JSON.parse(ele.output)
+          const JsonuserName = ele.postedByUserName
+
+              let isFollowing = false;
+
+              if(user?.following?.includes(ele.postedByUser)){
+                  isFollowing = true
+              }
+              
               return(
                 <>
-                  <TrendResult output={JsonOutput} title={ele.title} id={ele._id} allCode = {ele}/>
+                  <TrendResult output={JsonOutput} title={ele.title} id={ele._id} allCode = {ele} postedById={ele.postedByUser} isFollowing={isFollowing} userName={JsonuserName}/>
                 </>
               )
         })
@@ -143,9 +158,19 @@ function Trending() {
       {
         trendingSearchState && trendingSearchedData.map((ele)=>{
           const JsonOutput = JSON.parse(ele.output)
+          const JsonuserName = ele.postedByUserName
+          let isFollowing = false;
+
+          if(user?.following?.includes(ele.postedByUser)){
+              isFollowing = true
+          }
+          console.log(ele);
+          
+          // console.log(postedByUserName);/
+        
           return(
             <>
-              <TrendResult output={JsonOutput} title={ele.title} id={ele._id} allCode = {ele}/>
+              <TrendResult output={JsonOutput} title={ele.title} id={ele._id} allCode = {ele} postedById={ele.postedByUser} isFollowing={isFollowing} userName={JsonuserName}/>
             </>
           )
       })

@@ -15,7 +15,6 @@ function Following() {
       const token =  localStorage.getItem(name)
       return token
    }
- 
    useEffect(()=>{
      const token = getToken('CPToken');
      if(!token){
@@ -31,8 +30,8 @@ function Following() {
      localStorage.removeItem('CPToken');
      localStorage.removeItem('user');
      dispatch(setUser(null))
-
      return; 
+
    }else{
      const user = localStorage.getItem("user")
      const jsonUSer = JSON.parse(user)
@@ -40,31 +39,11 @@ function Following() {
    }
  
    },[])
-
-   const ot = `
+   
     
-    <html>
-        <head>
-          <style>.pa{
-  color:red
-}</style>
-        </head>
-        <body>
-            <p class="pa">paras mire asda,dsla,ds</p>
-        <script>let pa = document.querySelector(".pa")
-
-pa.addEventListener("click",()=>{
-  pa.style.color = "green"
-})</script>
-        </body> 
-    </html>
-      `;
-
-
-
   return (
-    <div className='w-full min-h-full bg-yellow-500 text-center'>
-      <ResultCard/>
+    <div className='w-full min-h-full bg-yellow-500 h-screen text-center'>
+      {/* <ResultCard output ={} title={} allcode ={}/> */}
     </div>
   )
 }
