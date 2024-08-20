@@ -78,7 +78,7 @@ async function HandleLogout (){
   }catch(e){  
     console.log(e);
     
-    toast.error(`Something went wrong while loggingout ${e}`)
+    toast.error(`Something went wrong while logging out ${e}`)
   }
 
 }  
@@ -250,7 +250,7 @@ function getToken(name) {
                       <div className="fixed right-0 top-17 h-[35%] min-w-52 border-2 border-black bg-black  rounded-bl-md">
                         <div className="flex flex-col gap-1">
                           <div className=" px-4 py-2 hover:bg-gray-400 cursor-pointer">
-                            <span className="text-sm">Your Work</span>
+                            <span className="text-sm" onClick={()=>navigate("/profile")} >View Profile</span>
                           </div>
                           <div className=" px-4 py-2 hover:bg-gray-800 cursor-pointer">
                             <span className="text-sm">Name : {user.name}</span>

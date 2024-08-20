@@ -59,6 +59,8 @@ function TrendResult({output,title,allCode,postedById,userName,isFollowing,}) {
 
       } catch(e){
           console.log(e);
+          toast.error(`${e}`)
+
       }
        
   }
@@ -86,7 +88,8 @@ function TrendResult({output,title,allCode,postedById,userName,isFollowing,}) {
             
         } catch(e){
               console.log(e);
-              
+              toast.error(`${e}`)
+
         } 
   }
 
@@ -116,7 +119,7 @@ function TrendResult({output,title,allCode,postedById,userName,isFollowing,}) {
                       <img className='w-full h-full' src='https://img.freepik.com/premium-photo/cute-disney-pixar-3d-style-illustration-boy-concept-art_508977-255.jpg'></img>
           </div>
         <p className="text-md font-extralight font-mono" title='follow'>{userName}</p>
-         { !isFollowing && user?._id !== postedById && (<SlUserFollow onClick={()=>handleFollowRequest(postedById)} className='text-sm ml-1 text-blue-600 '/>)} 
+         { !isFollowing && user?._id !== postedById && (<SlUserFollow title='Follow' onClick={()=>handleFollowRequest(postedById)} className='text-sm ml-1 text-blue-600 '/>)} 
           {isFollowing && <SlUserFollowing title='Following' className='text-green-500 ml-1' onClick={()=>handleUnfollowRequest(postedById)}/>}                      
       </div>
     </div>

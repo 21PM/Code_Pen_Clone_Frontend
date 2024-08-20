@@ -78,6 +78,8 @@ function ResultCard({output,title,allcode}) {
         };
       }catch(e){
         console.log(e)
+        toast.error(`${e}`)
+
       }finally{
         setTimeout(()=>{
           dispatch(setDeleteWork(false))
@@ -86,9 +88,7 @@ function ResultCard({output,title,allcode}) {
       
    }
 
-  function handleViewAndEditWork() {
-    console.log(allcode);
-    
+  function handleViewAndEditWork() {    
       dispatch(setEditWork(true)) 
       dispatch(setDoEditWorkId(allcode._id))
       dispatch(setHtml(JSON.parse(allcode.html)))

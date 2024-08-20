@@ -26,6 +26,7 @@ function NewStaticPen() {
 
   const work = useSelector(store=>store.work)
   const isEdit = useSelector(store=>store.work.edit)
+  const user = useSelector(store=>store.user.user)
   const onlyViewCode = useSelector(store=>store.work.onlyViewCode)
   const doEditWorkId = useSelector(store=>store.work.doEditWorkId)
   const {html,css,js,output,title} = useSelector(store=>store.work)
@@ -161,7 +162,8 @@ function NewStaticPen() {
     
     }catch(e){
         console.log("err",e);
-        
+        toast.error(`${e}`)
+
     }
 
   }
@@ -173,7 +175,7 @@ function NewStaticPen() {
       
     const token =  getToken("CPToken")
     if(!token){
-      toast.error("Please login to save code")
+      toast.error("Please login to save code") 
       return;
     }
 
@@ -186,9 +188,7 @@ function NewStaticPen() {
     localStorage.removeItem('CPToken');
     localStorage.removeItem('user');
     dispatch(setUser(null))
-
     toast.error("Please login again to save code session expired")
-
     return; 
   }else{
     const user = localStorage.getItem("user")
@@ -212,7 +212,6 @@ function NewStaticPen() {
           }
         })
 
-        console.log("resp",res);
         if(res.data.status){
           toast.success("Your work has been updated")
           navigate("/your-work")
@@ -222,12 +221,10 @@ function NewStaticPen() {
           dispatch(setOutout(""))
           dispatch(setTitle("Untitled"))
         }
-        
-
 
       }catch(e){
           console.log("er",e);
-          
+         toast.error(`${e}`)
       }
   }
 
@@ -261,7 +258,7 @@ function NewStaticPen() {
                       }
                     </span>
                   </div>
-                  <span className="text-white text-xs">Paras More</span>
+                  <span className="text-white text-xs">{user?.name}</span>
                 </div>
               </section>
 

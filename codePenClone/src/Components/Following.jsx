@@ -46,6 +46,7 @@ const getFollowingWork = async (tk)=>{
                 dispatch(setFollowingData(response.data.FollowingData))
           }catch(e){
               console.log(e);
+              toast.error(`${e}`)
               
           }finally{
             setIsloading(false)
@@ -66,6 +67,8 @@ const getFollowingWork = async (tk)=>{
   }
   
   const getSearchFollowingData = async (name) =>{
+
+    
         try{
           setIsloading(true)
           const response = await axios.get(`${LOCAL_END_POINT}/get-following-searchwork?name=${name}`,{
@@ -73,17 +76,17 @@ const getFollowingWork = async (tk)=>{
             headers:{
               'Authorization':`Bearer ${Token}`
             }
-          })
+          })          
           if(response.data.SearchedData.length === 0){
             dispatch(setNoDataFound(true))
           }else{
             dispatch(setNoDataFound(false))
-            dispatch(setChangeFollowing(false))
             dispatch(setSearchedFollowingData(response.data.SearchedData))
           }
         }catch(e){
               console.log(e);
-              
+              toast.error(`${e}`)
+
         }finally{
           setIsloading(false)
 

@@ -11,6 +11,7 @@ import { setAllTrendingWork,setTrendingSearchedData } from '../Slice.js/workSlic
 import SkeletonLoadingCard from './SkeletonLoadingCard';
 import { setHasMore } from '../Slice.js/workSlice';
 import store from '../Store/store';
+import { toast } from 'react-toastify';
 
 
 
@@ -43,6 +44,8 @@ function Trending() {
             dispatch(setAllTrendingWork(res.data.TrendingWork))            
         }catch(e){
           console.log(e);
+          toast.error(`${e}`)
+
         }finally{
           SetIsloading(false)
         }
@@ -60,6 +63,8 @@ function Trending() {
         }
         catch(e){
         console.log(e);
+        toast.error(`${e}`)
+
         }
       }else{
         return
@@ -85,7 +90,8 @@ function Trending() {
             
           }catch(e){
               console.log(e);
-              
+              toast.error(`${e}`)
+
           }finally{
             setHasMore(true)
 

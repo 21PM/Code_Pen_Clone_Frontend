@@ -92,7 +92,9 @@ const SignUp = () => {
       }
         
     }catch(e){
-        console.log(e);
+        console.log(e.response.data.message);
+        toast.error(`${e.response.data.message}`)
+
     }finally{
       SetIsloading(false)
     }

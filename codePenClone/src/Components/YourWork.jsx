@@ -71,6 +71,8 @@ function YourWork() {
     setMyWork(response.data.data)
       }catch(e){
         console.log(e);
+        toast.error(`${e}`)
+
       }
   }
 
@@ -100,6 +102,8 @@ function YourWork() {
         }
       }catch(e){
           console.log(e);
+          toast.error(`${e}`)
+
       }
 
   } 

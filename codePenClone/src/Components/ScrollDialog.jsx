@@ -6,15 +6,27 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useSelector } from 'react-redux';
-import { setShowFollowings ,setOpenDialog} from '../Slice.js/FollowingSlice';
+import { setShowFollowings ,setOpenDialog,setShowFollowingsData,setShowFollowersData} from '../Slice.js/FollowingSlice';
 import { useDispatch } from 'react-redux';
+import axios from "axios"
+import { setUser } from '../Slice.js/userSlice';
+import { toast } from 'react-toastify';
+import { LOCAL_END_POINT } from '../utils/API';
+
+
+
 
 export default function ScrollDialog() {
   const openDialog = useSelector((store) => store.following.openDialog);
+  const user = useSelector((store) => store.user.user);
   const showFollowings = useSelector((store) => store.following.showFollowings);
   const showFollowers = useSelector((store) => store.following.showFollowers);
   const showFollowingData = useSelector((store) => store.following.showFollowingData);
   const showFollowersData = useSelector((store) => store.following.showFollowersData);
+  const [backupData,setBackUpData] = React.useState([])
+  const [accountIds,setAccountIds] = React.useState([])
+  const [searchValue,setSearchValue] = React.useState("")
+  const Token = useSelector((store) => store.following.Token);
   const dispatch = useDispatch();
   const [scroll, setScroll] = React.useState('paper');
 
@@ -27,7 +39,76 @@ export default function ScrollDialog() {
     dispatch(setOpenDialog(false));
   };
 
+  const handleUnfollow = async (ele)=>{
+
+    const Obj = {
+      postedById:ele._id
+    }
+
+    console.log(ele._id);
+    
+
+    try{
+      const response = await axios.post(`${LOCAL_END_POINT}/remove-following`,Obj,{
+        withCredentials:true,
+        headers:{
+          'Authorization':`Bearer ${Token}`
+        }
+      })
+
+      if(response.data.status){
+        dispatch(setUser(response.data.user))   
+        localStorage.setItem("user",JSON.stringify(response.data.user))
+        setAccountIds([...accountIds,ele._id])
+        toast.success(`You had unfollowed ${ele.name}`)  
+        }      
+        
+
+    }catch(e){
+      console.log(e);
+      toast.error(`${e}`)
+
+    }
+  }
+
+  const handleFollow = async (ele)=>{
+
+      const followId ={
+        userId:ele._id
+      }
+      
+      try{  
+
+        const response = await axios.post(`${LOCAL_END_POINT}/add-follower`,followId,{
+          withCredentials:true,
+          headers:{
+            'Authorization':`Bearer ${Token}`
+          }
+        })
+
+        if(response.data.status){
+          const ans  = accountIds?.filter((element,i)=>{
+            return element !== ele._id
+            
+          })
+          setAccountIds(ans)
+          toast.success(`You are following ${ele.name}`)             
+
+          dispatch(setUser(response.data.user))   
+          localStorage.setItem("user",JSON.stringify(response.data.user))
+    }                    
+
+      }catch(e){
+        console.log(response);
+
+      }
+  }
+
+   
+
   const descriptionElementRef = React.useRef(null);
+  const inputRef = React.useRef(null);
+
   React.useEffect(() => {
     if (openDialog) {
       const { current: descriptionElement } = descriptionElementRef;
@@ -35,12 +116,65 @@ export default function ScrollDialog() {
         descriptionElement.focus();
       }
     }
+
+    
+    if(showFollowers){    
+      console.log("floow");
+        
+      setBackUpData(showFollowersData)
+    }
+    
+    if(showFollowings){
+      console.log("floowing ");
+
+      setBackUpData(showFollowingData)
+
+    }
+
+    return () => setAccountIds([])
   }, [openDialog]);
+
+  React.useEffect(() => {
+
+    console.log(backupData);
+    
+
+    // Logic related to Following searchValue changes 
+    if(showFollowings){
+      if (searchValue !== "") {
+        const ans  = backupData?.filter((ele,i)=>{
+            return ele.name.toLowerCase().includes(searchValue.toLowerCase())
+        })          
+        dispatch(setShowFollowingsData(ans))  
+      } 
+      if(searchValue === ""){
+       dispatch(setShowFollowingsData(backupData))  
+       }
+    }
+
+    
+    
+    // Logic related to Followers searchValue changes 
+
+    if(showFollowers){
+          if(searchValue !== ""){
+            const ans = backupData?.filter((ele,i)=>{
+              return ele.name.toLowerCase().includes(searchValue.toLowerCase())
+
+            })
+            dispatch(setShowFollowersData(ans))  
+          }
+          if(searchValue === ""){
+            dispatch(setShowFollowersData(backupData))  
+          }
+      }
+
+   
+
+  }, [searchValue]);
 
   return (
     <React.Fragment>
-      <Button onClick={handleClickOpen('paper')}>scroll=paper</Button>
-      <Button onClick={handleClickOpen('body')}>scroll=body</Button>
       <Dialog
         open={openDialog}
         onClose={handleClose}
@@ -55,9 +189,10 @@ export default function ScrollDialog() {
           },
         }}
       >
-        <DialogTitle id="scroll-dialog-title">
+        <DialogTitle id="scroll-dialog-title">  
         <div>
-        <input type='text' placeholder='Search name' className='rounded-lg px-6 py-1 bg-black'></input>
+        <input type='text' placeholder='Search name'   ref={inputRef}
+ value={searchValue} className='rounded-lg px-6 py-1 bg-black' onChange={(e)=>setSearchValue(e.target.value)}></input>
 
         </div>
         </DialogTitle>
@@ -68,17 +203,24 @@ export default function ScrollDialog() {
             tabIndex={-1}
             sx={{ color: 'white' }} // Set text color for DialogContentText
           >
-
-      
-
-
-
             <div className='min-w-full flex flex-col gap-4'>
             {
               showFollowings && (showFollowingData.length > 0 ? showFollowingData.map((ele,i)=>{
+
+                let showFollowBtn = false
+                if (accountIds.includes(ele._id)){
+                  showFollowBtn = true
+                }
+        
                     return(
                       <div className='text-black flex items-center justify-between'>
-                      <p className='text-white'> {ele.name.charAt(0).toUpperCase()+ "" + ele.name.substring(1).toLowerCase()} </p> <button className='px-4 p-2  bg-gray-800 text-white text-sm font-light  rounded-full'>Unfollow</button>
+                      <p className='text-white'> {ele.name.charAt(0).toUpperCase()+ "" + ele.name.substring(1).toLowerCase()} </p> 
+                      
+                       {
+                        !showFollowBtn ? <button onClick={()=>handleUnfollow(ele)} className='px-4 p-2  bg-gray-800 text-white text-sm font-light  rounded-full'>Unfollow</button> :
+
+                      <button onClick={()=>handleFollow(ele)} className='px-4 p-2  bg-gray-800 text-white text-sm font-light  rounded-full'>follow</button>
+                      } 
                       </div>
                     )
 
@@ -86,12 +228,24 @@ export default function ScrollDialog() {
             )
             }
 
-            
           {
               showFollowers && (showFollowersData.length > 0 ? showFollowersData.map((ele,i)=>{
+
+                  console.log(ele._id);
+                  console.log(user.following);
+                  let showFollowBtn = false
+
+                  if(user.following.includes(ele._id)){
+                    showFollowBtn = true
+                  }
+
                     return(
                       <div className='text-black flex items-center justify-between'>
-                      <p className='text-white'> {ele.name.charAt(0).toUpperCase()+ "" + ele.name.substring(1).toLowerCase()} </p> <button className='px-4 p-2  bg-gray-800 text-white text-sm font-light  rounded-full'>Unfollow</button>
+                      <p className='text-white'> {ele.name.charAt(0).toUpperCase()+ "" + ele.name.substring(1).toLowerCase()} </p>
+                      {
+                        showFollowBtn ? <button className='px-4 p-2  bg-gray-800 text-white text-sm font-light  rounded-full'onClick={()=>handleUnfollow(ele)} >Unfollow</button>:
+                        <button className='px-4 p-2  bg-gray-800 text-white text-sm font-light  rounded-full' onClick={()=>handleFollow(ele)}>Follow</button>
+                      } 
                       </div>        
                       )
 
