@@ -6,6 +6,7 @@ import YourWork from '../Components/YourWork'
 import Following from '../Components/Following'
 import Trending from '../Components/Trending'
 import PageNotFound from '../Components/PageNotFound'
+import Profile from '../Components/Profile'
 import { useSelector } from 'react-redux'
 import NewStaticPen from '../Components/NewStaticPen'
 import { useLocation } from 'react-router-dom'
@@ -24,6 +25,7 @@ function Router() {
           <Route path='/following'element={<Following/>}/>
           <Route path='/trending'element={<Trending/>}/>
           <Route path='/pen'element={<NewStaticPen/>}/>
+          <Route path='/profile'element={<Profile/>}/>
           <Route path="*" element={<PageNotFound/>} />
         </Routes>
     </>

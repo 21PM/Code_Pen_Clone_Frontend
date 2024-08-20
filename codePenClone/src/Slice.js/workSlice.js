@@ -65,7 +65,7 @@ const workSlice = createSlice({
        },
        setTrendingSearchedData: (state,action)=>{
         state.trendingSearchedData =  action.payload;
-         }
+        }
   
     }
 })

@@ -10,7 +10,7 @@ import { setUser } from '../Slice.js/userSlice';
 import { SlUserFollowing } from "react-icons/sl";
 
 
-function TrendResult({output,title,id,allCode,postedById,userName,isFollowing,}) {
+function TrendResult({output,title,allCode,postedById,userName,isFollowing,}) {
   const dispatch = useDispatch()
 
 
@@ -63,9 +63,36 @@ function TrendResult({output,title,id,allCode,postedById,userName,isFollowing,})
        
   }
 
+ async function handleUnfollowRequest(postedById){
+ 
+        let ToUnFollowId = {
+          postedById:postedById
+        }
+
+   const token = getToken('CPToken');
+
+        try{
+            const response = await axios.post(`${LOCAL_END_POINT}/remove-following`,ToUnFollowId,{
+              withCredentials:true,
+              headers:{
+                'Authorization':`Bearer ${token}`
+              }
+            })
+            if(response.data.status){
+            dispatch(setUser(response.data.user))   
+            localStorage.setItem("user",JSON.stringify(response.data.user))
+            toast.success(`You had unfollowed ${userName}`)  
+            }
+            
+        } catch(e){
+              console.log(e);
+              
+        } 
+  }
+
   return (
 
-<div className="md:w-80 h-full 2xs:w-48 bg-gray-900 p-2 rounded-md cursor-pointer hover:shadow-lg hover:shadow-orange-200">
+<div className="md:w-80 h-full 2xs:w-48  bg-opacity-30 shadow-lg shadow-neutral-500 p-2 rounded-md cursor-pointer hover:shadow-lg hover:shadow-orange-200">
   {/* // Output Iframe */}
   <div className="h-60 bg-white">
     <iframe
@@ -90,7 +117,7 @@ function TrendResult({output,title,id,allCode,postedById,userName,isFollowing,})
           </div>
         <p className="text-md font-extralight font-mono" title='follow'>{userName}</p>
          { !isFollowing && user?._id !== postedById && (<SlUserFollow onClick={()=>handleFollowRequest(postedById)} className='text-sm ml-1 text-blue-600 '/>)} 
-          {isFollowing && <SlUserFollowing title='Following' className='text-green-500 ml-1'/>}                      
+          {isFollowing && <SlUserFollowing title='Following' className='text-green-500 ml-1' onClick={()=>handleUnfollowRequest(postedById)}/>}                      
       </div>
     </div>
     </div>

@@ -5,6 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import store from './Store/store';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import ScrollDialog from './Components/ScrollDialog';
+
 function App() {
 
   return (
@@ -23,7 +25,9 @@ function App() {
       rtl={false}
       draggable
       theme="dark"
-/>
+      />
+
+      <ScrollDialog/>
 </Provider>
     </>
   )

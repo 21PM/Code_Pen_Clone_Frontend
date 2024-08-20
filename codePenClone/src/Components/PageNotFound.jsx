@@ -53,6 +53,7 @@ const PageNotFound = () => {
       </Link> 
       }
     </div>
+  
   );
 };
 

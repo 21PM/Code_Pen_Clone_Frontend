@@ -5,7 +5,7 @@ import { FiTrendingUp } from "react-icons/fi";
 import { HiSearch } from "react-icons/hi";
 import { RiArrowRightDoubleLine } from "react-icons/ri";
 import { RiArrowLeftDoubleLine } from "react-icons/ri";
-
+import { toast } from "react-toastify";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { GrLogout } from "react-icons/gr";
 import { useFetcher, useNavigate } from "react-router-dom";
@@ -13,12 +13,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLogin } from "../Slice.js/LoginSlice";
 import { setEditWork } from "../Slice.js/workSlice";
 import { setTrendingSearchState,setTrendingSearchValue } from "../Slice.js/workSlice";
+import axios from "axios";
+import { LOCAL_END_POINT } from "../utils/API";
+import { setToken } from "../Slice.js/FollowingSlice";
+import { setUser } from "../Slice.js/userSlice";
 
 
 function Navbar() {
 
     const user = useSelector(store=>store.user.user)
-
+    const Token = useSelector(store=>store.following.Token  )
     const navigate = useNavigate()
     const dispatch = useDispatch()
   const [isLogin, SetisLogin] = useState(true);
@@ -49,7 +53,52 @@ function handleTrendingSearch (e){
   dispatch(setTrendingSearchState(true))
   dispatch(setTrendingSearchValue(e.target.value))
 }
+
+async function HandleLogout (){
+      console.log(Token);
+      
+  try{
+    const response  = await axios.post(`${LOCAL_END_POINT}/logout`,user,{
+      withCredentials:true,
+      headers:{
+        'Authorization':`Bearer ${Token}`
+      }
+    })
+
+    if(response.data.status){
+      localStorage.removeItem("CPToken")  
+      localStorage.removeItem("user")
+      navigate("/")
+      dispatch(setUser(null))
+      dispatch(setLogin(true))
+      toast.success(`You are sucessfully logged out ${user.name}`)
+    }
+
+
+  }catch(e){  
+    console.log(e);
+    
+    toast.error(`Something went wrong while loggingout ${e}`)
+  }
+
+}  
+
+
+
+function getToken(name) {
+  const token =  localStorage.getItem(name)
+  return token
+}
+
   useEffect(()=>{
+    const token = getToken('CPToken');
+    if(!token){
+      navigate("/")
+      return
+    }
+    dispatch(setToken(token))
+
+    return ()=>SetShowProfile(false)
 
   },[user])
   
@@ -197,10 +246,10 @@ function handleTrendingSearch (e){
                     </div>
                   </div>
                   {showProfile && (
-                    <div className="absolute">
-                      <div className="fixed right-0 top-17 h-[35%] min-w-52 bg-black opacity-90 shadow-lg  rounded-bl-md">
+                    <div className="absolute z-50">
+                      <div className="fixed right-0 top-17 h-[35%] min-w-52 border-2 border-black bg-black  rounded-bl-md">
                         <div className="flex flex-col gap-1">
-                          <div className=" px-4 py-2 hover:bg-gray-800 cursor-pointer">
+                          <div className=" px-4 py-2 hover:bg-gray-400 cursor-pointer">
                             <span className="text-sm">Your Work</span>
                           </div>
                           <div className=" px-4 py-2 hover:bg-gray-800 cursor-pointer">
@@ -211,7 +260,7 @@ function handleTrendingSearch (e){
                               Email : {user.email}
                             </span>
                           </div>
-                          <div className="px-4 py-2  hover:bg-gray-800 cursor-pointer flex items-center gap-2">
+                          <div className="px-4 py-2  hover:bg-gray-800 cursor-pointer flex items-center gap-2"onClick={HandleLogout}>
                             <GrLogout />
                             <span className="text-sm">Logout</span>
                           </div>

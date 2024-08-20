@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { setLogin } from '../Slice.js/LoginSlice';
+import { setToken } from '../Slice.js/FollowingSlice';
 
 const SignUp = () => {
 
@@ -23,10 +24,11 @@ const SignUp = () => {
   const[isalreadyhaveaccount,setIsalreadyhaveaccount] = useState(false)
   const [isalert,SetIsalert] = useState(false)
   const [alertmsg,Setalertmsg] = useState("")
-  const [getEmailvalidationStatus,setEmailvalidationStatus] = useState(true)
 
 
+  useEffect(()=>{
 
+  },[login])
 
   async function HandleSignUp (e){
         if(!name ||!email || !password){
@@ -62,7 +64,6 @@ const SignUp = () => {
         
   }
 
-
   // LOGIN FUNCTION 
   const HandleLogin = async()=>{
 
@@ -85,7 +86,7 @@ const SignUp = () => {
         dispatch(setUser(res.data.user))
         localStorage.setItem("CPToken",res.data.token.toString())
         localStorage.setItem("user",JSON.stringify(res.data.user))
-
+        dispatch(setToken(res.data.token))
           toast.success("You are logged in sucessfully")
           navigate("/your-work")
       }

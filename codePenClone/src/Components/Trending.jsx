@@ -93,9 +93,7 @@ function Trending() {
   }
 
   useEffect(()=>{
-    // console.log("a");
-    // console.log(user);
-    
+  
   },[user])
 
    useEffect(()=>{     
@@ -130,7 +128,7 @@ function Trending() {
    },[trendingSearchValue])
 
   return (
-    <div className='w-full min-h-screen grid xl:gap-10 xl:grid-cols-3 xl:grid-rows-3 md:grid-cols-2 md:gap-8 2xs:gap-10 place-items-center px-10 bg-black opacity-90 text-center'>
+    <div className='w-full min-h-screen grid xl:gap-10 xl:grid-cols-3 xl:grid-rows-3 md:grid-cols-2 md:gap-8 2xs:gap-10 place-items-center px-10 bg-gradient-to-r from-black via-gray-700 to-black opacity-90 text-center'>
       
 
       {/* //Initially when component will mount at that time below map code will be run once user started searching anything this will not reflect instead trendingSearchedData map code will reflect   */}
@@ -194,7 +192,7 @@ function Trending() {
       }
       
         {
-            isDataFound && !hasMore && <h1 className='text-white w-full'>No More Data</h1>
+              isDataFound && !hasMore && <h1 className='text-white w-full'>No More Data</h1>
         }
 
     </div>

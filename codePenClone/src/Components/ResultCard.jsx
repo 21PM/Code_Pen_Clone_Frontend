@@ -100,7 +100,7 @@ function ResultCard({output,title,allcode}) {
   
   return (
     <>
-      <div className="md:w-80 h-full 2xs:w-48 bg-gray-900 p-2 rounded-md cursor-pointer hover:shadow-lg hover:shadow-orange-200">
+      <div className="md:w-80 h-full 2xs:w-48 backdrop-blur-md bg-opacity-30 shadow-lg shadow-neutral-500  p-2 rounded-md cursor-pointer hover:shadow-lg hover:shadow-orange-200">
         {/* // Output Iframe */}
     
         <div className="h-64 bg-white">

@@ -229,11 +229,12 @@ function NewStaticPen() {
           console.log("er",e);
           
       }
-
-    
-
   }
-  
+
+  function goToProfile(){
+        navigate("/profile")
+  }
+
   return (
     <>
 
@@ -289,7 +290,7 @@ function NewStaticPen() {
 
 
 
-                <button className="py-1 px-3 bg-gray-600 text-white rounded-sm hover:bg-transparent hover:border-2 ">
+                <button className="py-1 px-3 bg-gray-600 text-white rounded-sm hover:bg-transparent hover:border-2 " onClick={goToProfile}>
                   Profile
                 </button>
               </section>

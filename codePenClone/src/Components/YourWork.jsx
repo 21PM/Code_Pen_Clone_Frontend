@@ -107,19 +107,20 @@ function YourWork() {
   return (
 
     <>
-    <div className='w-full flex items-center justify-center pt-5 gap-4 bg-black opacity-90'>
+    <div className='w-full flex items-center justify-center pt-5 gap-4 bg-gradient-to-r from-black via-gray-700 to-black opacity-90
+
+'>
 
           <div className='w-3/12 px-4 py-2 flex'>
           <input type="text" placeholder='Search your work' value={searchedValue} className='w-full py-2 px-2 min-h-full' onChange={(e)=>setSearchvalue(e.target.value)}/>
          {
           isSearch && <button className='px-2 py-2 text-md border-2 hover:text-white hover:bg-black  bg-white text-black' onClick={handleSearch}><IoCloseSharp/></button>
-
          } 
 
           </div>
           <button className='px-2 py-2 text-md border-2 hover:text-white hover:bg-black rounded-md bg-white text-black' onClick={handleSearch}>Search</button>
     </div>
-    <div className='w-full min-h-screen flex items-center justify-center pt-10 bg-black opacity-90'>
+    <div className='w-full min-h-screen flex items-center justify-center pt-10 bg-gradient-to-r from-black via-gray-700 to-black opacity-90'>
 
        {
           myWork.length === 0 && <p className='text-white text-center mt-[-30%]'>No work found</p>
