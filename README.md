@@ -124,6 +124,15 @@ ScreenShots
 7.Profile  page
 ![image](https://github.com/user-attachments/assets/658f1f01-0a47-4329-9dfb-ac76de07d6d5)
 
+8.View followers and Search followers
+![image](https://github.com/user-attachments/assets/bcf0e6c9-13f5-41e7-b7d5-9d7f60c3cf6f)
+
+9.View following and Search following
+![image](https://github.com/user-attachments/assets/63ce5c73-b77a-4192-97e5-089e4bb3d937)
+
+10.Go to pen and profile page path
+![image](https://github.com/user-attachments/assets/c09eb18b-47d8-41d7-9d0b-1ce5ec0c8180)
+
 
 
 
