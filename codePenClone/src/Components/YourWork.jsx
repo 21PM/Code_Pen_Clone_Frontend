@@ -91,7 +91,7 @@ function YourWork() {
     
       try{
         
-        const res = await axios.get(`${LOCAL_END_POINT}/search-my-work?title=${isSearch ? "" : searchedValue}`,{
+        const res = await axios.get(`${API_END_POINT}/search-my-work?title=${isSearch ? "" : searchedValue}`,{
           withCredentials:true,
           headers:{
             'Authorization':`Bearer ${Token}`

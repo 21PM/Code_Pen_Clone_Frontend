@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { setLogin } from '../Slice.js/LoginSlice';
 import { setToken } from '../Slice.js/FollowingSlice';
-
+import { API_END_POINT } from '../utils/API';
 const SignUp = () => {
 
   const user = useSelector(store=>store.user.user)
@@ -43,7 +43,7 @@ const SignUp = () => {
                 
         try{
           SetIsloading(true)
-          const res = await axios.post(`http://localhost:10000/signup`,userObj,)          
+          const res = await axios.post(`${API_END_POINT}/signup`,userObj,)          
           if(res.status === 200){
                 toast.success("Your account has been created")
                 setIsalreadyhaveaccount(!isalreadyhaveaccount)
@@ -79,7 +79,7 @@ const SignUp = () => {
       }
     try{
       SetIsloading(true)
-        const res = await axios.post(`http://localhost:10000/login`,obj,{
+        const res = await axios.post(`${API_END_POINT}/login`,obj,{
           withCredentials: true // This is crucial for sending cookies
       })
   

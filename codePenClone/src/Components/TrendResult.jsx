@@ -8,7 +8,7 @@ import { LOCAL_END_POINT } from '../utils/API';
 import axios from "axios"
 import { setUser } from '../Slice.js/userSlice';
 import { SlUserFollowing } from "react-icons/sl";
-
+import { API_END_POINT } from '../utils/API';
 
 function TrendResult({output,title,allCode,postedById,userName,isFollowing,}) {
   const dispatch = useDispatch()
@@ -44,7 +44,7 @@ function TrendResult({output,title,allCode,postedById,userName,isFollowing,}) {
        const token = getToken('CPToken');
        
       try{
-            const response = await axios.post(`${LOCAL_END_POINT}/add-follower`,ToFollowId,{
+            const response = await axios.post(`${API_END_POINT}/add-follower`,ToFollowId,{
               withCredentials:true,
               headers:{
                 'authorization': `Bearer ${token}`
@@ -74,7 +74,7 @@ function TrendResult({output,title,allCode,postedById,userName,isFollowing,}) {
    const token = getToken('CPToken');
 
         try{
-            const response = await axios.post(`${LOCAL_END_POINT}/remove-following`,ToUnFollowId,{
+            const response = await axios.post(`${API_END_POINT}/remove-following`,ToUnFollowId,{
               withCredentials:true,
               headers:{
                 'Authorization':`Bearer ${token}`

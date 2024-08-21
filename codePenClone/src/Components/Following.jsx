@@ -11,6 +11,7 @@ import { setFollowingPageNo } from '../Slice.js/FollowingSlice';
 import FollowingResultCard from './FollowingResultCard';
 import SkeletonLoadingCard from './SkeletonLoadingCard';
 import { toast } from 'react-toastify';
+import { API_END_POINT } from '../utils/API';
 
 import axios from 'axios';
 function Following() {
@@ -34,7 +35,7 @@ function Following() {
 const getFollowingWork = async (tk)=>{        
           try{  
             setIsloading(true)
-                const response = await axios.get(`${LOCAL_END_POINT}/get-following-work?skipCount=${followingPageNo}`,{
+                const response = await axios.get(`${API_END_POINT}/get-following-work?skipCount=${followingPageNo}`,{
                   withCredentials:true,
                   headers:{
                     'authorization':`Bearer ${tk}`
@@ -71,7 +72,7 @@ const getFollowingWork = async (tk)=>{
     
         try{
           setIsloading(true)
-          const response = await axios.get(`${LOCAL_END_POINT}/get-following-searchwork?name=${name}`,{
+          const response = await axios.get(`${API_END_POINT}/get-following-searchwork?name=${name}`,{
             withCredentials:true,
             headers:{
               'Authorization':`Bearer ${Token}`

@@ -12,7 +12,7 @@ import axios from "axios"
 import { setUser } from '../Slice.js/userSlice';
 import { toast } from 'react-toastify';
 import { LOCAL_END_POINT } from '../utils/API';
-
+import { API_END_POINT } from '../utils/API';
 
 
 
@@ -49,7 +49,7 @@ export default function ScrollDialog() {
     
 
     try{
-      const response = await axios.post(`${LOCAL_END_POINT}/remove-following`,Obj,{
+      const response = await axios.post(`${API_END_POINT}/remove-following`,Obj,{
         withCredentials:true,
         headers:{
           'Authorization':`Bearer ${Token}`
@@ -79,7 +79,7 @@ export default function ScrollDialog() {
       
       try{  
 
-        const response = await axios.post(`${LOCAL_END_POINT}/add-follower`,followId,{
+        const response = await axios.post(`${API_END_POINT}/add-follower`,followId,{
           withCredentials:true,
           headers:{
             'Authorization':`Bearer ${Token}`

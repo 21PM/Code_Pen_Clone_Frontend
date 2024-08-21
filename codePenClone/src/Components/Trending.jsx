@@ -12,7 +12,7 @@ import SkeletonLoadingCard from './SkeletonLoadingCard';
 import { setHasMore } from '../Slice.js/workSlice';
 import store from '../Store/store';
 import { toast } from 'react-toastify';
-
+import { API_END_POINT } from '../utils/API';
 
 
 function Trending() {
@@ -33,7 +33,7 @@ function Trending() {
 
   const  getTrendingWork = async ()=>{    
         try{
-            const  res = await axios.get(`${LOCAL_END_POINT}/trending-work?skipCount=${skipCount}`,{
+            const  res = await axios.get(`${API_END_POINT}/trending-work?skipCount=${skipCount}`,{
               withCredentials:true,
             })
             if(res.data.TrendingWork.length === 0){              
@@ -77,7 +77,7 @@ function Trending() {
         
           try{
             
-            const response = await axios.get(`${LOCAL_END_POINT}/search-trending-work?searchedValue=${query}`,{
+            const response = await axios.get(`${API_END_POINT}/search-trending-work?searchedValue=${query}`,{
               withCredentials:true
             })
             if(response.data.result.length === 0){

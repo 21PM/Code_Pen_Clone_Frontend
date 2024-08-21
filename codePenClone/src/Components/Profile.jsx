@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import axios from "axios"
 import { setOpenDialog } from '../Slice.js/FollowingSlice';
 import { LOCAL_END_POINT } from '../utils/API';
+import { API_END_POINT } from '../utils/API';
 
 const Profile = () => {
 
@@ -63,7 +64,7 @@ const Profile = () => {
 
     try{
       setIsloading(true)
-      const response = await axios.get(`${LOCAL_END_POINT}/show-followings`,{
+      const response = await axios.get(`${API_END_POINT}/show-followings`,{
         withCredentials:true,
         headers:{
           'Authorization':`Bearer ${Token}`
@@ -87,7 +88,7 @@ const Profile = () => {
 
   try{
     setIsloading(true)
-    const response = await axios.get(`${LOCAL_END_POINT}/show-followers`,{
+    const response = await axios.get(`${API_END_POINT}/show-followers`,{
       withCredentials:true,
       headers:{
         'Authorization':`Bearer ${Token}`
@@ -111,7 +112,7 @@ const Profile = () => {
     async function HandleLogout (){
       
   try{
-    const response  = await axios.post(`${LOCAL_END_POINT}/logout`,user,{
+    const response  = await axios.post(`${API_END_POINT}/logout`,user,{
       withCredentials:true,
       headers:{
         'Authorization':`Bearer ${Token}`

@@ -17,6 +17,7 @@ import axios from "axios"
 import { json, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { setEditWork } from '../Slice.js/workSlice';
+import { API_END_POINT } from '../utils/API';
 
 function NewStaticPen() {
 
@@ -144,7 +145,7 @@ function NewStaticPen() {
 
     try{
 
-      const res = await axios.post(`http://localhost:10000/add-work`,SaveCompleteCode,{
+      const res = await axios.post(`${API_END_POINT}/add-work`,SaveCompleteCode,{
         withCredentials: true,// This is crucial for sending cookies
         headers:{
             'Authorization': `Bearer ${token}`,
@@ -206,7 +207,7 @@ function NewStaticPen() {
     }
 
       try{
-        const res = await axios.post(`http://localhost:10000/edit-work/${doEditWorkId}`,editedCompleteCode,{
+        const res = await axios.post(`${API_END_POINT}/edit-work/${doEditWorkId}`,editedCompleteCode,{
           withCredentials:true,
           headers:{
             'Authorization' : `Bearer ${token}`

@@ -17,7 +17,7 @@ import axios from "axios";
 import { LOCAL_END_POINT } from "../utils/API";
 import { setToken } from "../Slice.js/FollowingSlice";
 import { setUser } from "../Slice.js/userSlice";
-
+import { API_END_POINT } from "../utils/API";
 
 function Navbar() {
 
@@ -58,7 +58,7 @@ async function HandleLogout (){
       console.log(Token);
       
   try{
-    const response  = await axios.post(`${LOCAL_END_POINT}/logout`,user,{
+    const response  = await axios.post(`${API_END_POINT}/logout`,user,{
       withCredentials:true,
       headers:{
         'Authorization':`Bearer ${Token}`

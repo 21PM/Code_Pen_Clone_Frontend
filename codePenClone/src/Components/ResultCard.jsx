@@ -11,6 +11,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { MdOutlineModeEdit } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { setEditWork } from "../Slice.js/workSlice";
+import { API_END_POINT } from "../utils/API";
 
 function ResultCard({output,title,allcode}) {
 
@@ -65,7 +66,7 @@ function ResultCard({output,title,allcode}) {
     }
 
       try{
-        const response = await axios.post(`http://localhost:10000/delete-work/${id}`,id,{
+        const response = await axios.post(`${API_END_POINT}/delete-work/${id}`,id,{
           withCredentials: true,
           headers:{
             'Authorization': `Bearer ${istoken}`
