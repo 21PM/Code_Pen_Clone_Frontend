@@ -231,8 +231,6 @@ export default function ScrollDialog() {
           {
               showFollowers && (showFollowersData.length > 0 ? showFollowersData.map((ele,i)=>{
 
-                  console.log(ele._id);
-                  console.log(user.following);
                   let showFollowBtn = false
 
                   if(user.following.includes(ele._id)){

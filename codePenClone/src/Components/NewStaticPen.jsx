@@ -156,6 +156,7 @@ function NewStaticPen() {
       dispatch(setCss(""))
       dispatch(setJs(""))
       dispatch(setOutout(""))
+      dispatch(setTitle("Untitled"))
       navigate("/your-work")
     }
      console.log("result",res);

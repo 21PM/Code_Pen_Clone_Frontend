@@ -15,7 +15,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 function Following() {
 
-  const user = useSelector(store=>store.user)
+  const user = useSelector(store=>store.user.user)
   const followingPageNo = useSelector(store=>store.following.followingPageNo)
   const followingData = useSelector(store=>store.following.followingData)
   const searchedFollowingData = useSelector(store=>store.following.searchedFollowingData)
@@ -154,6 +154,8 @@ useEffect(()=>{
     if(followingPageNo > 0){
       getFollowingWork(Token)
     }  
+    console.log("a");
+    
 },[followingPageNo])
 
 
@@ -176,6 +178,10 @@ useEffect(()=>{
                   </>
                 )
             })
+          }
+
+          {
+            !followingSearchValue &&( followingData.length === 0 && <div className='flex'><h1 className='text-white w-full '>You are not following anyone</h1></div>)
           }
           
           {
