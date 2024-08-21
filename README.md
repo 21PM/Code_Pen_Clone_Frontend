@@ -101,6 +101,41 @@ Backend: Render
 Contributing
 Contributions are welcome! If you'd like to improve the project, feel free to fork the repository and submit a pull request. You can also open an issue if you find any bugs or have suggestions for new features.
 
+ScreenShots
+
+1. signup page
+![image](https://github.com/user-attachments/assets/17c9adeb-faca-4955-a69a-14759c96fe47)
+
+2.Login page
+![image](https://github.com/user-attachments/assets/da7feb51-47f6-4b75-b160-46562a5d0046)
+
+3. Your Work page
+![image](https://github.com/user-attachments/assets/8d589863-0bf8-4cb5-821b-be9b280f3981)
+
+4.Following page where you can see the codes of the users whom you are following
+![image](https://github.com/user-attachments/assets/0bb2d50f-4579-4336-ac5d-ab82b2346e35)
+
+5.Trending page
+![image](https://github.com/user-attachments/assets/d1eda469-33cd-4ccc-9c09-60185079b8d8)
+
+6.Pen page
+![image](https://github.com/user-attachments/assets/658f1f01-0a47-4329-9dfb-ac76de07d6d5)
+
+7. Profile Page
+![image](https://github.com/user-attachments/assets/8f45427f-3444-4561-8625-90b1c361efd8)
+
+8. View Followers and Search followers
+![image](https://github.com/user-attachments/assets/a4cc56f1-b964-4f93-8e36-27cbc58d21a3)
+
+9. View following and Search following
+![image](https://github.com/user-attachments/assets/3f334082-4ba5-40a8-a3f1-e67f83304432)
+
+10.Go to pen and  menu path
+![image](https://github.com/user-attachments/assets/e2518a39-471e-4f7a-81ea-3562c84b614b)
+
+
+
+
 License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
