@@ -113,25 +113,18 @@ ScreenShots
 ![image](https://github.com/user-attachments/assets/86e8bb9a-75f7-4035-b8e5-f63c5c42e3a4)
 
 4.Following page where you can see the codes of the users whom you are following
-![image](https://github.com/user-attachments/assets/0bb2d50f-4579-4336-ac5d-ab82b2346e35)
+![image](https://github.com/user-attachments/assets/6d5ecbe5-5728-4a4f-be48-7301ef6dab4a)
 
 5.Trending page
-![image](https://github.com/user-attachments/assets/d1eda469-33cd-4ccc-9c09-60185079b8d8)
+![image](https://github.com/user-attachments/assets/0bb2d50f-4579-4336-ac5d-ab82b2346e35)
 
 6.Pen page
+![image](https://github.com/user-attachments/assets/d1eda469-33cd-4ccc-9c09-60185079b8d8)
+
+7.Profile  page
 ![image](https://github.com/user-attachments/assets/658f1f01-0a47-4329-9dfb-ac76de07d6d5)
 
-7. Profile Page
-![image](https://github.com/user-attachments/assets/8f45427f-3444-4561-8625-90b1c361efd8)
 
-8. View Followers and Search followers
-![image](https://github.com/user-attachments/assets/a4cc56f1-b964-4f93-8e36-27cbc58d21a3)
-
-9. View following and Search following
-![image](https://github.com/user-attachments/assets/3f334082-4ba5-40a8-a3f1-e67f83304432)
-
-10.Go to pen and  menu path
-![image](https://github.com/user-attachments/assets/e2518a39-471e-4f7a-81ea-3562c84b614b)
 
 
 
