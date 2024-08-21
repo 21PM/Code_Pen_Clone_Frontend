@@ -110,7 +110,7 @@ ScreenShots
 ![image](https://github.com/user-attachments/assets/da7feb51-47f6-4b75-b160-46562a5d0046)
 
 3. Your Work page
-![image](https://github.com/user-attachments/assets/8d589863-0bf8-4cb5-821b-be9b280f3981)
+![image](https://github.com/user-attachments/assets/86e8bb9a-75f7-4035-b8e5-f63c5c42e3a4)
 
 4.Following page where you can see the codes of the users whom you are following
 ![image](https://github.com/user-attachments/assets/0bb2d50f-4579-4336-ac5d-ab82b2346e35)
