@@ -1,6 +1,6 @@
 # CodePen Clone #
 Overview
-The CodePen Clone project is a full-stack web application that replicates the core functionalities of CodePen. Users can write, edit, and share code snippets, follow other users, and manage their profiles. This project is built using React.js for the frontend and Node.js, Express, and MongoDB for the backend, along with a variety of additional libraries to enhance functionality and user experience.
+The CodePen Clone project is a full-stack web application that replicates the core functionalities of CodePen. Users can write, edit,delete, code snippets, follow other users, and view their codes . This project is built using React.js for the frontend and Node.js, Express, and MongoDB for the backend, along with a variety of additional libraries to enhance functionality and user experience.
 
 ##Features##
 User Authentication:
@@ -14,15 +14,15 @@ User Authentication:
 *Social Features:.*
 
 *Follow and unfollow other users..*
-*Search for users by name and explore their code snippets..*
+*Search for following users by name and explore their code snippets..*
 *View followers and following lists on your profile..*
 *Search Functionality:.*
 
-*Search for code snippets by name..*
+*Search for code snippets by title..*
 *Search for users by name in the following section..*
 *Profile Management:.*
 
-*View and manage your profile, including your followers and following..*
+*View and manage your profile*
 *Securely log out from the application..*
 *Technology Stack.*
 
@@ -53,9 +53,12 @@ Node.js and npm installed on your machine.
 A MongoDB instance (local or cloud).
 
 Steps
-1.Clone the repository:
-git clone https://github.com/your-username/codepen-clone.git
+** .Clone the Frontend repository: **
+git clone https://github.com/21PM/Code_Pen_Clone_Frontend.git
 cd codepen-clone
+
+** .Clone the Backend repository: **
+git clone https://github.com/21PM/Code_Pen_Clone_Backend.git
 
 2.Backend Setup:
 *Navigate to the backend directory:*
