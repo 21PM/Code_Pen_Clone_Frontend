@@ -37,8 +37,8 @@ function FollowingResultCard({title,userName,allcode,output}) {
 
   <div className="flex items-center justify-between mt-2 px-2">
     <div className="p-1 font-semibold text-white flex flex-col flex-wrap">
-      {/* {title.charAt(0).toUpperCase() + "" + title.substr(1,title.length)} */}
-      Untitled
+      {title?.charAt(0).toUpperCase() + "" + title.substr(1,title.length)}
+      
       <div>                                                                                                                 
         <div className='flex items-center justify-start gap-1'>
           <div className='min-w-6 min-h-6 max-w-6 max-h-6 rounded-full overflow-hidden'>
