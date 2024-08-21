@@ -13,7 +13,6 @@ const SignUp = () => {
 
   const user = useSelector(store=>store.user.user)
   const login = useSelector(store=>store.login.login)
-  
 
   const dispatch = useDispatch()
   const navigate = useNavigate();
@@ -65,7 +64,7 @@ const SignUp = () => {
         
   }
 
-  // LOGIN FUNCTION 
+  // LOGIN FUNCTIONs
   const HandleLogin = async()=>{
 
     
