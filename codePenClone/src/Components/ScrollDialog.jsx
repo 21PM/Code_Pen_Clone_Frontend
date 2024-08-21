@@ -25,6 +25,7 @@ export default function ScrollDialog() {
   const showFollowersData = useSelector((store) => store.following.showFollowersData);
   const [backupData,setBackUpData] = React.useState([])
   const [accountIds,setAccountIds] = React.useState([])
+  const [isLoading,setisLoading] = React.useState(false)
   const [searchValue,setSearchValue] = React.useState("")
   const Token = useSelector((store) => store.following.Token);
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ export default function ScrollDialog() {
 
   const handleClose = () => {
     dispatch(setOpenDialog(false));
+    setSearchValue("")
   };
 
   const handleUnfollow = async (ele)=>{
@@ -49,6 +51,7 @@ export default function ScrollDialog() {
     
 
     try{
+      setisLoading(true)
       const response = await axios.post(`${API_END_POINT}/remove-following`,Obj,{
         withCredentials:true,
         headers:{
@@ -68,6 +71,9 @@ export default function ScrollDialog() {
       console.log(e);
       toast.error(`${e}`)
 
+    }finally{
+      setisLoading(false)
+
     }
   }
 
@@ -78,6 +84,7 @@ export default function ScrollDialog() {
       }
       
       try{  
+        setisLoading(true)
 
         const response = await axios.post(`${API_END_POINT}/add-follower`,followId,{
           withCredentials:true,
@@ -100,6 +107,9 @@ export default function ScrollDialog() {
 
       }catch(e){
         console.log(response);
+
+      }finally{
+        setisLoading(false)
 
       }
   }
@@ -169,7 +179,6 @@ export default function ScrollDialog() {
           }
       }
 
-   
 
   }, [searchValue]);
 
@@ -204,6 +213,13 @@ export default function ScrollDialog() {
             sx={{ color: 'white' }} // Set text color for DialogContentText
           >
             <div className='min-w-full flex flex-col gap-4'>
+
+            {
+            isLoading &&  <span class="loader m-auto mt-2"></span>
+          }
+                
+
+
             {
               showFollowings && (showFollowingData.length > 0 ? showFollowingData.map((ele,i)=>{
 
@@ -228,12 +244,14 @@ export default function ScrollDialog() {
             )
             }
 
+            
+
           {
               showFollowers && (showFollowersData.length > 0 ? showFollowersData.map((ele,i)=>{
 
                   let showFollowBtn = false
 
-                  if(user.following.includes(ele._id)){
+                  if(user?.following.includes(ele._id)){
                     showFollowBtn = true
                   }
 
@@ -250,6 +268,7 @@ export default function ScrollDialog() {
               }):<><h1>No Followers</h1></>
             )
           }
+
 
 
              

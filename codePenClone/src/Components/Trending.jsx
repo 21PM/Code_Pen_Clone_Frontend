@@ -26,6 +26,7 @@ function Trending() {
   const trendingSearchedData = useSelector(store=>store.work.trendingSearchedData)
   const allTrendingWork = useSelector(store=>store.work.allTrendingWork)
   const [isLoading,SetIsloading] = useState(true)
+  const[showLoader,setShowLoader] = useState(false)
   const [isDataFound,setIsDataFound] = useState(true)
 
   const dispatch = useDispatch();
@@ -76,7 +77,7 @@ function Trending() {
         setHasMore(false)
         
           try{
-            
+            setShowLoader(true)
             const response = await axios.get(`${API_END_POINT}/search-trending-work?searchedValue=${query}`,{
               withCredentials:true
             })
@@ -94,6 +95,7 @@ function Trending() {
 
           }finally{
             setHasMore(true)
+            setShowLoader(false)
 
           }
   }
@@ -115,7 +117,7 @@ function Trending() {
       if(hasMore){
         setTimeout(()=>{
           getTrendingWork()
-        },500)
+        },100)
       }
    },[skipCount])
 
@@ -123,13 +125,14 @@ function Trending() {
     if(trendingSearchValue === ""){
       dispatch(setTrendingSearchState(false))
       setIsDataFound(true)
+          setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 100);
 
       dispatch(setTrendingSearchedData([]))
       return
     }
     var timer = setTimeout(()=>{
       getTrendingSearchResult(trendingSearchValue);
-    },800)
+    },500)
     return () => clearTimeout(timer)
    },[trendingSearchValue])
 
@@ -180,10 +183,21 @@ function Trending() {
       })
       }
       {
-          !isDataFound && <div className='min-w-full '>
+          !isDataFound && <>
+        <div></div>
           <p className='text-white'>Data Not found with search value " {trendingSearchValue} " </p>  
+        <div></div>
 
-          </div>
+          </>
+      }
+
+      {
+        showLoader &&  <>
+        <div></div>
+        <span class="loader"></span>
+        <div></div>
+      </>
+
       }
 
         
@@ -198,7 +212,12 @@ function Trending() {
       }
       
         {
-              isDataFound && !hasMore && <h1 className='text-white w-full'>No More Data</h1>
+          !showLoader &&  isDataFound && !hasMore && 
+          <>
+          <div></div>
+          <h1 className='text-white w-full'>No More Data</h1>
+          <div></div>
+        </>
         }
 
     </div>

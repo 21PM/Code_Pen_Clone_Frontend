@@ -182,7 +182,13 @@ useEffect(()=>{
           }
 
           {
-            !followingSearchValue &&( followingData.length === 0 && <div className='flex'><h1 className='text-white w-full '>You are not following anyone</h1></div>)
+           !isLoading && !followingSearchValue &&( followingData.length === 0 && 
+          <>
+            <div></div>
+            <h1 className='text-white'>You are not following anyone</h1>
+            <div></div>
+          </>
+          )
           }
           
           {
@@ -193,7 +199,7 @@ useEffect(()=>{
               })
           }
 
-            {
+          {
              !noDataFound ? searchedFollowingData.map((ele,i)=>{
               const JsonOutput = JSON.parse(ele.output)              
             
@@ -202,8 +208,8 @@ useEffect(()=>{
                   < FollowingResultCard title={ele.title} userName={ele.postedByUserName} allcode={ele} output={JsonOutput}/>
                 </>
               )
-            }) : (noDataFound && <> <h1 className='text-white'>No data found by the name " {followingSearchValue} "</h1> </> )
-            }
+            }) : (noDataFound && <> <h1 className='text-white'>You are not following anyone by the name " {followingSearchValue} "</h1> </> )
+          }
 
           
     </div>

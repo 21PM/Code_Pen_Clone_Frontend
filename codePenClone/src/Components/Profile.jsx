@@ -170,24 +170,26 @@ const Profile = () => {
 
 {/* Followers and Following Sections */}
 <div className="w-full max-w-4xl mx-auto md:flex md:flex-row md:items-center gap-10 flex flex-col items-center">
-  <div className="bg-gray-700 w-6/12 p-4 rounded-lg  flex items-center justify-center gap-6">
+  <div className="bg-gray-700 w-6/12 p-4 rounded-lg  flex items-center justify-center gap-6 cursor-pointer" onClick={handleFollowers}>
     <h1 className="text-xl font-semibold mb-2" 
-    onClick={handleFollowers}
+   
     >Followers</h1>
      <h1 className="text-xl font-semibold mb-2">{user?.followers?.length}</h1>
   </div>
-  <div className="bg-gray-700 p-4 w-6/12 rounded-lg flex items-center justify-center gap-6">
+  <div className="bg-gray-700 p-4 w-6/12 rounded-lg flex items-center justify-center gap-6 cursor-pointer"onClick={handleFollowing}>
     <h1 className="text-
-    xl font-semibold mb-2" 
-    onClick={handleFollowing}
-    
+    xl font-semibold mb-2"     
     >Following</h1>
      <h1 className="text-xl font-semibold mb-2">{user?.following?.length}</h1>
   </div>
  
 </div>
   {
-        isLoading && <h1 className='text-white mt-10 text-xl font-semibold mb-2'>Loading ...</h1>
+        isLoading && <>
+        <div></div>
+        <span class="loader"></span>
+        <div></div>
+      </>
   }
 </div>
 
