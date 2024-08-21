@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { setLogin } from '../Slice.js/LoginSlice';
 import { setToken } from '../Slice.js/FollowingSlice';
-import { API_END_POINT } from '../utils/API';
+
 const SignUp = () => {
 
   const user = useSelector(store=>store.user.user)
